@@ -12,6 +12,7 @@ public class Empleado extends Persona {
         this.cantidad_horas = cantidad_horas;
         this.puesto = puesto;
         this.salario = calcularSalario();
+        this.nivelPermisos = NivelPermisos.EMPLEADO;
     }
 
     /* metodos */

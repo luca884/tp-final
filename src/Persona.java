@@ -2,8 +2,8 @@ public abstract class Persona {
 
     private String nombre;
     private String apellido;
-    private String dni;
-    private NivelPermisos nivelPermisos;
+    private final String dni;
+    protected NivelPermisos nivelPermisos;
 
     protected Persona(String nombre, String apellido, String dni){
         this.nombre = nombre;
@@ -31,7 +31,11 @@ public abstract class Persona {
         return dni;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public NivelPermisos getNivelPermisos(){
+        return this.nivelPermisos;
+    }
+
+    public void setNivelPermisos(NivelPermisos nivelPermisos){
+        this.nivelPermisos = nivelPermisos;
     }
 }
