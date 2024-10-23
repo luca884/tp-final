@@ -1,2 +1,6 @@
 public abstract class Persona {
+
+
+
+
 }
