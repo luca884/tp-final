@@ -9,6 +9,7 @@ public abstract class Servicio {
         contIdServicio++;
         this.idServicio = contIdServicio;
         this.precio = precio;
+        this.estado = Estado.DISPONIBLE;
     }
 
     public int getIdServicio() {
@@ -25,5 +26,13 @@ public abstract class Servicio {
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }
