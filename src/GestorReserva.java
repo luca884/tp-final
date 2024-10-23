@@ -1,13 +1,13 @@
 public class GestorReserva extends Gestor<Reserva> {
-    /*
-    @Override
+
+    /* metodos */
+
     public Reserva buscar(Integer id) {
         for(Reserva reserva: lista){
-            if(reserva.getId() == id){
+            if(reserva.getId().equals(id)){
                 return reserva;
             }
         }
         return null;
     }
-     */
 }
