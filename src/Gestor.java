@@ -34,7 +34,7 @@ public class Gestor<T> {
     public T buscar(T item) {
         /*
             este método no tiene mucho sentido
-            sobreescribir en cada clase derivada
+            sobreescribir/sobrecargar en cada clase derivada
             para buscar por el campo identificador o el que sea conveniente
          */
         for (T _item : lista) {
