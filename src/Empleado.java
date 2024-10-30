@@ -20,6 +20,12 @@ public class Empleado extends Persona {
         return valor_hora * cantidad_horas;
     }
 
+    /* toString */
+    @Override
+    public String toString() {
+        return super.toString() + "salario: %s\npuesto: %s".formatted(salario, puesto);
+    }
+
     /* getters y setters*/
     public Double getSalario() {
         return salario;

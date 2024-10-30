@@ -9,4 +9,11 @@ public class Cliente extends Persona{
         this.nivelPermisos = NivelPermisos.CLIENTE;
     }
 
+    /* toString */
+    // todo: modificar este metodo al agregar atributos exclusivos, si no borrar
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
 }

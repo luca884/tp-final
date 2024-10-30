@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public abstract class Persona {
 
     private String nombre;
@@ -9,6 +11,26 @@ public abstract class Persona {
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
+    }
+
+    /* toString */
+    @Override
+    public String toString() {
+        return "dni:%s\nnombre: %s\napellido: %s\nnivel permisos: %s".formatted(dni, nombre, apellido, nivelPermisos);
+    }
+
+    /* equals y hashcode  */
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (object == null || getClass() != object.getClass()) return false;
+        Persona persona = (Persona) object;
+        return Objects.equals(dni, persona.dni);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(dni);
     }
 
     public String getNombre() {
