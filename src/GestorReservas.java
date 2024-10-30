@@ -1,4 +1,4 @@
-public class GestorReserva extends Gestor<Reserva> {
+public class GestorReservas extends Gestor<Reserva> {
 
     /* metodos */
 
