@@ -1,6 +1,6 @@
 import java.util.HashSet;
 
-public class Gestor<T> {
+public abstract class Gestor<T> {
     /* atributos */
     public HashSet<T> lista = new HashSet<>();
 
