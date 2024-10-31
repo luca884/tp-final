@@ -10,4 +10,9 @@ public class GestorReservas extends Gestor<Reserva> {
         }
         return null;
     }
+
+    /* archivos json */
+    public void cargarDesdeArchivo(String nombre_archivo) {
+        super.cargarDesdeArchivo(nombre_archivo, Reserva.class);
+    }
 }
