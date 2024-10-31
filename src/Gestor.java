@@ -37,6 +37,7 @@ public abstract class Gestor<T> {
     public void mostrar() {
         for (T item : lista) {
             mostrar(item);
+            System.out.println("-".repeat(24));
         }
     }
 
