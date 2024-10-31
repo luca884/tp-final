@@ -23,7 +23,7 @@ public class Empleado extends Persona {
     /* toString */
     @Override
     public String toString() {
-        return super.toString() + "salario: %s\npuesto: %s".formatted(salario, puesto);
+        return super.toString() + "\nsalario: %s\npuesto: %s".formatted(salario, puesto);
     }
 
     /* getters y setters*/
