@@ -1,21 +1,29 @@
 package Servicios;
 
 import Enumeraciones.Estado;
+import Personas.Cliente;
+import Reservas.Reserva;
+
+import java.time.LocalDate;
 
 public abstract class Servicio {
-
     private static int contIdServicio = 0;
     private final int idServicio;
     private double precio;
     private Estado estado;
 
-    protected Servicio(double precio){
+    /* constuctores */
+    public Servicio() {
         contIdServicio++;
         this.idServicio = contIdServicio;
-        this.precio = precio;
         this.estado = Estado.DISPONIBLE;
     }
+    public Servicio(double precio){
+        this();
+        this.precio = precio;
+    }
 
+    /* getters y setters */
     public int getIdServicio() {
         return idServicio;
     }
