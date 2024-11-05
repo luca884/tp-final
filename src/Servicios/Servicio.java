@@ -1,3 +1,7 @@
+package Servicios;
+
+import Enumeraciones.Estado;
+
 public abstract class Servicio {
 
     private static int contIdServicio = 0;

@@ -1,3 +1,7 @@
+package Personas;
+
+import Enumeraciones.NivelPermisos;
+
 public class Cliente extends Persona{
 
     // Deberíamos ser capaces de agregar atributos exclusivos para

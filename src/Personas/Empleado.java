@@ -1,3 +1,8 @@
+package Personas;
+
+import Enumeraciones.NivelPermisos;
+import Enumeraciones.Puesto;
+
 public class Empleado extends Persona {
     /* atributos */
     private Double salario;

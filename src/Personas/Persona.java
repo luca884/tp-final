@@ -1,3 +1,7 @@
+package Personas;
+
+import Enumeraciones.NivelPermisos;
+
 import java.util.Objects;
 
 public abstract class Persona {

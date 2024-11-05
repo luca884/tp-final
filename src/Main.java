@@ -2,9 +2,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import Enumeraciones.Puesto;
+import Gestores.GestorEmpleados;
+import Personas.Empleado;
+
 public class Main {
     public static void main(String[] args) {
-        /* GestorEmpleados gestor_empleados = new GestorEmpleados(); */
+        // GestorEmpleados gestor_empleados = new Gestores.GestorEmpleados();
         /*
         HashSet<Empleado> empleados = new HashSet<>(List.of(
                 new Empleado("Pepe", "Sanchez", "12", 12.0, 8, Puesto.ADMINISTRADOR),
@@ -15,7 +19,7 @@ public class Main {
 
         gestor_empleados.setLista(empleados);
         gestor_empleados.guardarEnArchivo("empleados.json");
-         */
+        */
 
         /*
         gestor_empleados.cargarDesdeArchivo("empleados.json");
