@@ -4,18 +4,19 @@ import Personas.Cliente;
 import Servicios.Servicio;
 
 import java.time.LocalDate;
+import java.util.StringJoiner;
 
-public class Reserva {
+public class Reserva <T extends Servicio> {
     /* atributos */
     static private Integer contador_id = 0;
     private Integer id;
 
-    private Servicio servicio;
+    private T servicio;
     private Cliente cliente;
     private LocalDate fecha;
 
     /* constructores */
-    public Reserva(Servicio servicio, Cliente cliente, LocalDate fecha) {
+    public Reserva(T servicio, Cliente cliente, LocalDate fecha) {
         this.servicio = servicio;
         this.cliente = cliente;
         this.fecha = fecha;
@@ -23,12 +24,20 @@ public class Reserva {
         this.id = contador_id;
     }
 
+    /* metodos */
+
+    /* toString */
+    @Override
+    public String toString() {
+        return "id: %s\ncliente: %s\nServicio: %s".formatted(id, cliente.getDni(), servicio.getIdServicio());
+    }
+
     /* getters y setters */
     public Servicio getServicio() {
         return servicio;
     }
 
-    public void setServicio(Servicio servicio) {
+    public void setServicio(T servicio) {
         this.servicio = servicio;
     }
 
