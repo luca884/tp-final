@@ -1,13 +1,39 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-
-import Enumeraciones.Puesto;
-import Gestores.GestorEmpleados;
-import Personas.Empleado;
+import Gestores.Reservas.GestorReservasEstacionamiento;
+import Personas.Cliente;
+import Servicios.Estacionamiento;
 
 public class Main {
     public static void main(String[] args) {
+        // GestorReservasEstacionamiento gestorReservasEstacionamiento = new GestorReservasEstacionamiento();
+
+        /* codigo de muestra: hacer reserva estacionamiento
+        Estacionamiento estacionamiento = new Estacionamiento(500);
+        Cliente cliente = new Cliente("Juan", "alberdi", "43.112.777");
+
+        // agregar reserva al gestor
+        gestorReservasEstacionamiento.agregar(estacionamiento.reservar(cliente));
+
+        // guardar reservas en archivo
+        gestorReservasEstacionamiento.guardarEnArchivo("reservas_estacionamiento.json");
+
+        // mostrar reservas
+        gestorReservasEstacionamiento.mostrar();
+        */
+
+        /*
+        // cargar reservas desde archivo (json)
+        gestorReservasEstacionamiento.cargarDesdeArchivo("reservas_estacionamiento.json");
+
+        // mostrar reservas
+        gestorReservasEstacionamiento.mostrar();
+        */
+
+        /*
+        System.out.println(Estacionamiento.getLugares_disponibles());
+        System.out.println(Estacionamiento.getCapacidad());
+        */
+
+        /* codigo de muestra: empleados */
         // GestorEmpleados gestor_empleados = new Gestores.GestorEmpleados();
         /*
         HashSet<Empleado> empleados = new HashSet<>(List.of(
@@ -25,6 +51,5 @@ public class Main {
         gestor_empleados.cargarDesdeArchivo("empleados.json");
         gestor_empleados.mostrar();
         */
-
     }
 }
