@@ -23,6 +23,20 @@ public abstract class Servicio {
         this.precio = precio;
     }
 
+    /* metodos */
+    public Reserva reservar(Cliente cliente, LocalDate fecha){
+        return new Reserva(this, cliente, fecha);
+    }
+    public Reserva reservar(Cliente cliente){
+        return this.reservar(cliente, LocalDate.now());
+    }
+
+    /* toString */
+    @Override
+    public String toString() {
+        return "id: %s\nprecio: %s\nestado: %s".formatted(idServicio, precio, estado);
+    }
+
     /* getters y setters */
     public int getIdServicio() {
         return idServicio;
