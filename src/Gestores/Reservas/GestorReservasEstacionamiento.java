@@ -1,5 +1,6 @@
 package Gestores.Reservas;
 
+import Enumeraciones.Estado;
 import Gestores.Gestor;
 import Reservas.Reserva;
 import Servicios.Estacionamiento;
@@ -13,6 +14,7 @@ public class GestorReservasEstacionamiento extends Gestor<Reserva<Estacionamient
     public void agregar(Reserva<Estacionamiento> reserva) {
         Estacionamiento estacionamiento = reserva.getServicio();
         if (estacionamiento.esReservable()) {
+            estacionamiento.setEstado(Estado.OCUPADO);
             super.agregar(reserva);
             Estacionamiento.cambiarLugaresDispoibles(-1);
         }
