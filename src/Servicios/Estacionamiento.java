@@ -3,7 +3,7 @@ package Servicios;
 public class Estacionamiento  extends Servicio {
     /* atributos */
     static private Integer capacidad = 70;
-    static private Integer lugares_disponibles = 70;
+    static private Integer lugares_disponibles = capacidad;
 
     /* constructores */
     public Estacionamiento() {
