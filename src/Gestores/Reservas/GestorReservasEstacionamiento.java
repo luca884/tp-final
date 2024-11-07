@@ -10,8 +10,8 @@ import java.util.HashSet;
 
 public class GestorReservasEstacionamiento extends Gestor<Reserva<Estacionamiento>> {
     @Override
-    public void agregar(Reserva reserva) {
-        Estacionamiento estacionamiento = (Estacionamiento) reserva.getServicio();
+    public void agregar(Reserva<Estacionamiento> reserva) {
+        Estacionamiento estacionamiento = reserva.getServicio();
         if (estacionamiento.esReservable()) {
             super.agregar(reserva);
             Estacionamiento.cambiarLugaresDispoibles(-1);
