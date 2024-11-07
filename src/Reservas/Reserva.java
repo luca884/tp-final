@@ -33,7 +33,7 @@ public class Reserva <T extends Servicio> {
     }
 
     /* getters y setters */
-    public Servicio getServicio() {
+    public T getServicio() {
         return servicio;
     }
 
