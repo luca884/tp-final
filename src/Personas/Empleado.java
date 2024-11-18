@@ -1,3 +1,8 @@
+package Personas;
+
+import Enumeraciones.NivelPermisos;
+import Enumeraciones.Puesto;
+
 public class Empleado extends Persona {
     /* atributos */
     private Double salario;
@@ -18,6 +23,12 @@ public class Empleado extends Persona {
     /* metodos */
     public Double calcularSalario(){
         return valor_hora * cantidad_horas;
+    }
+
+    /* toString */
+    @Override
+    public String toString() {
+        return super.toString() + "\nsalario: %s\npuesto: %s".formatted(salario, puesto);
     }
 
     /* getters y setters*/
