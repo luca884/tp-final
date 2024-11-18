@@ -20,7 +20,7 @@ public abstract class Persona {
     /* toString */
     @Override
     public String toString() {
-        return "dni:%s\nnombre: %s\napellido: %s\nnivel permisos: %s".formatted(dni, nombre, apellido, nivelPermisos);
+        return "DNI: %s\nNombre: %s\nApellido: %s\nNivel de Permisos: %s".formatted(dni, nombre, apellido, nivelPermisos);
     }
 
     /* equals y hashcode  */

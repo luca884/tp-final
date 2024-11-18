@@ -1,10 +1,11 @@
 package Gestores;
 
+import Excepciones.ElementoDuplicadoException;
+import Excepciones.ElementoNoEncontradoException;
 import Json.LocalDateAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -26,11 +27,17 @@ public abstract class Gestor<T> {
     }
 
     /* metodos */
-    public void agregar(T item) {
+    public void agregar(T item) throws ElementoDuplicadoException {
+        if(lista.contains(item)){
+            throw new ElementoDuplicadoException("El elemento ya se encuentra en la lista");
+        }
         lista.add(item);
     }
 
-    public void eliminar(T item) {
+    public void eliminar(T item) throws ElementoNoEncontradoException {
+        if(!lista.contains(item)){
+            throw new ElementoNoEncontradoException("El elemento no se encontró en la lista");
+        }
         lista.remove(item);
     }
 
@@ -64,12 +71,14 @@ public abstract class Gestor<T> {
     public void guardarEnArchivo(String nombre_archivo) {
         try (FileWriter file = new FileWriter(nombre_archivo)) {
             file.write(gson.toJson(getLista()));
+            System.out.println("Archivo guardado con éxito.");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void cargarDesdeArchivo(String nombre_archivo, Class<T> clazz) {
+        System.out.println("Carga de archivo: "+ nombre_archivo);
         Type type = TypeToken.getParameterized(HashSet.class, clazz).getType();
         cargarDesdeArchivo(nombre_archivo, type);
     }
@@ -78,7 +87,7 @@ public abstract class Gestor<T> {
         try (FileReader reader = new FileReader(nombre_archivo)) {
             setLista(gson.fromJson(reader, type));
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 

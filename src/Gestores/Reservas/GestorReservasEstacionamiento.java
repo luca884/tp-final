@@ -1,17 +1,18 @@
 package Gestores.Reservas;
 
 import Enumeraciones.Estado;
+import Excepciones.ElementoDuplicadoException;
 import Gestores.Gestor;
 import Reservas.Reserva;
 import Servicios.Estacionamiento;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.HashSet;
 
 public class GestorReservasEstacionamiento extends Gestor<Reserva<Estacionamiento>> {
+
     @Override
-    public void agregar(Reserva<Estacionamiento> reserva) {
+    public void agregar(Reserva<Estacionamiento> reserva) throws ElementoDuplicadoException {
         Estacionamiento estacionamiento = reserva.getServicio();
         if (estacionamiento.esReservable()) {
             estacionamiento.setEstado(Estado.OCUPADO);

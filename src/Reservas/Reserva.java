@@ -9,7 +9,7 @@ import java.util.StringJoiner;
 public class Reserva <T extends Servicio> {
     /* atributos */
     static private Integer contador_id = 0;
-    private Integer id;
+    private final Integer id;
 
     private T servicio;
     private Cliente cliente;
@@ -29,7 +29,7 @@ public class Reserva <T extends Servicio> {
     /* toString */
     @Override
     public String toString() {
-        return "id: %s\ncliente: %s\nServicio: %s".formatted(id, cliente.getDni(), servicio.getIdServicio());
+        return  "ID: %s\nCliente: %s\nServicio: %s".formatted(id, cliente.getDni(), servicio.getIdServicio());
     }
 
     /* getters y setters */
