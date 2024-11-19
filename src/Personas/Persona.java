@@ -8,7 +8,7 @@ public abstract class Persona {
 
     private String nombre;
     private String apellido;
-    private final String dni;
+    private String dni;
     protected NivelPermisos nivelPermisos;
 
     protected Persona(String nombre, String apellido, String dni){
@@ -58,6 +58,10 @@ public abstract class Persona {
 
     public String getDni() {
         return dni;
+    }
+
+    public void setDni(String dni){
+        this.dni = dni;
     }
 
     public NivelPermisos getNivelPermisos(){
