@@ -5,6 +5,7 @@ import Gestores.GestorClientes;
 import Personas.Cliente;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -60,7 +61,7 @@ private double precioTotal;
                 cliente.setNombre(nombre);
                 cliente.setApellido(apellido);
                 cliente.setDni(dni);
-                cliente.setTelefono(Long.parseLong(telefono));
+                cliente.setTelefono(Long.valueOf(telefono));
                 cliente.setCorreo(correoelectronico);
                 cliente.setValor_Total(Double.parseDouble(textPrecioTotal.getText()));
 
@@ -83,12 +84,69 @@ private double precioTotal;
                 } catch (ElementoDuplicadoException ex) {
                     System.err.println(ex.getMessage());
                 }
+                // Variables para usuario y contraseña
+                final String[] usuario = new String[1];   // Variable para el usuario
+                final String[] contrasena = new String[1]; // Variable para la contraseña
+
+                // Crear el diálogo
+                JDialog dialogo = new JDialog((JFrame) null, "Usuario y contraseña", true);
+                dialogo.setLayout(new BorderLayout());
+                JPanel editPanel = new JPanel(new GridLayout(6, 4));
+
+                    // Campo para el usuario
+                JTextField editUsuarioField = new JTextField();
+                editPanel.add(new JLabel("Usuario:"));
+                editPanel.add(editUsuarioField);
+
+                    // Campo para la contraseña
+                JPasswordField editContrasenaField = new JPasswordField();
+                editPanel.add(new JLabel("Contraseña:"));
+                editPanel.add(editContrasenaField);
+
+                // Botón para confirmar
+                JButton confirmButton = new JButton("Confirmar");
+
+                // Acción al presionar el botón
+                confirmButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        // Captura los valores ingresados
+                        String usuarioIngresado = editUsuarioField.getText().trim();
+                        String contrasenaIngresada = new String(editContrasenaField.getPassword());
+
+                        // Verificar que ambos campos estén completos
+                        if (!usuarioIngresado.isEmpty() && !contrasenaIngresada.isEmpty()) {
+                            // Verificar que el usuario y la contraseña sean distintos
+                            if (!usuarioIngresado.equals(contrasenaIngresada)) {
+                                usuario[0] = usuarioIngresado;
+                                contrasena[0] = contrasenaIngresada;
+
+                                // Mensaje de éxito
+                                JOptionPane.showMessageDialog(dialogo, "Usuario y contraseña guardados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                                dialogo.dispose(); // Cierra el diálogo
+                            } else {
+                                // Mensaje de error si son iguales
+                                JOptionPane.showMessageDialog(dialogo, "El usuario y la contraseña deben ser distintos.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            // Mensaje de error si faltan campos
+                            JOptionPane.showMessageDialog(dialogo, "Debe completar ambos campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+                });
+
+                // Agregar componentes al diálogo
+                dialogo.add(editPanel, BorderLayout.CENTER);
+                dialogo.add(confirmButton, BorderLayout.SOUTH);
+                dialogo.setSize(new Dimension(300, 220));
+                dialogo.setLocationRelativeTo(null);
+                dialogo.setVisible(true);
 
                 limpiarCampos();
                 JOptionPane.showMessageDialog(panel, "Cliente registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-                IniciarSesion iniciarSesion = new IniciarSesion();
-                iniciarSesion.setVisible(true);
+            /*   RegistrarUsuarioContra registrarUsuarioContra = new RegistrarUsuarioContra();
+               registrarUsuarioContra.setVisible(true);*/
                 JFrame frame = (JFrame) SwingUtilities.getRoot(registrarButton);
                 frame.dispose();
 

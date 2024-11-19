@@ -1,6 +1,13 @@
 package InterfazGrafica;
+import Enumeraciones.Puesto;
+import Excepciones.ElementoDuplicadoException;
+import Gestores.GestorClientes;
+import Gestores.GestorEmpleados;
+import Personas.Empleado;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.*;
 
 public class RegistrarEmpleado {
@@ -32,19 +39,45 @@ public class RegistrarEmpleado {
         confirmarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    String nombre, apellido, dni, horario, puesto;
+                    String nombre, apellido, dni, horario;
+                    Puesto puesto;
                     double salario;
 
                     nombre = textNombre.getText();
                     apellido = textApellido.getText();
                     dni = textDni.getText();
                     horario = textHorario.getText();
-                    puesto = textPuesto.getText();
+                    puesto = Puesto.valueOf(textPuesto.getText());
                     salario = Double.parseDouble(textSalario.getText());
 
-                    if (!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !horario.isEmpty() && !puesto.isEmpty() && salario <= 0){
+                    if (!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !horario.isEmpty() && salario <= 0){
 
-                        //METODO guardar empleado
+                        Empleado empleado = new Empleado();
+                        empleado.setNombre(nombre);
+                        empleado.setApellido(apellido);
+                        empleado.setDni(dni);
+                        empleado.setHorario(horario);
+                        empleado.setSalario(salario);
+                        empleado.setPuesto(Puesto.ADMINISTRADOR);               ///CAMBIARRRRRRRRRRRRRRRR
+
+                        // crea gestor
+                        GestorEmpleados gestorEmpleados = new GestorEmpleados();
+
+                        // carga clientes guardados en archivo, si existe el archivo
+                        File archivo_clientes = new File("empleados.json");
+                        if(archivo_clientes.exists()){
+                            gestorEmpleados.cargarDesdeArchivo("empleados.json");
+                        }
+
+                        try {
+                            // agrega cliente al gestor
+                            gestorEmpleados.agregar(empleado);
+                            // actualiza archivo
+                            gestorEmpleados.guardarEnArchivo("empleados.json");
+
+                        } catch (ElementoDuplicadoException ex) {
+                            System.err.println(ex.getMessage());
+                        }
 
                         limpiar();
                         JOptionPane.showMessageDialog(panel1, "Empleado registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
