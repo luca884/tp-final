@@ -10,7 +10,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         GestorReservasEstacionamiento gestorReservasEstacionamiento = new GestorReservasEstacionamiento();
-
+/*
         // codigo de muestra: hacer reserva estacionamiento
         Estacionamiento estacionamiento = new Estacionamiento(500);
         Cliente cliente = new Cliente("Juan", "alberdi", "43.112.777");
@@ -52,6 +52,6 @@ public class Main {
 
         gestor_empleados.cargarDesdeArchivo("empleados.json");
         gestor_empleados.mostrar();
-
+¨*/
     }
 }
