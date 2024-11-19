@@ -48,13 +48,23 @@ private double precioTotal;
             correoelectronico = textCorreoelectronico.getText();
             precioTotal = Double.parseDouble(textPrecioTotal.getText());
 
-            JOptionPane.showMessageDialog(panel, "Cliente registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-            limpiarCampos();
+            if(!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !telefono.isEmpty() && !correoelectronico.isEmpty() && precioTotal <= 0){
 
-            IniciarSesion iniciarSesion = new IniciarSesion();
-            iniciarSesion.setVisible(true);
-            JFrame frame = (JFrame) SwingUtilities.getRoot(registrarButton);
-            frame.dispose();
+                //METODO para guardar los clientes
+
+                limpiarCampos();
+                JOptionPane.showMessageDialog(panel, "Cliente registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+                IniciarSesion iniciarSesion = new IniciarSesion();
+                iniciarSesion.setVisible(true);
+                JFrame frame = (JFrame) SwingUtilities.getRoot(registrarButton);
+                frame.dispose();
+
+            }else {
+                JOptionPane.showMessageDialog(panel, "Error al registrar sus datos. Campos vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+
 
 
             }

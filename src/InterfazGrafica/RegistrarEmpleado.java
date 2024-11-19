@@ -5,12 +5,12 @@ import javax.swing.*;
 
 public class RegistrarEmpleado {
     private JPanel panel1;
-    private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JTextField textField5;
-    private JTextField textField6;
+    private JTextField textNombre;
+    private JTextField textApellido;
+    private JTextField textDni;
+    private JTextField textHorario;
+    private JTextField textSalario;
+    private JTextField textPuesto;
     private JButton confirmarButton;
     private JButton atrasButton;
 
@@ -27,8 +27,55 @@ public class RegistrarEmpleado {
             }
         });
 
+
+
+        confirmarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    String nombre, apellido, dni, horario, puesto;
+                    double salario;
+
+                    nombre = textNombre.getText();
+                    apellido = textApellido.getText();
+                    dni = textDni.getText();
+                    horario = textHorario.getText();
+                    puesto = textPuesto.getText();
+                    salario = Double.parseDouble(textSalario.getText());
+
+                    if (!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !horario.isEmpty() && !puesto.isEmpty() && salario <= 0){
+
+                        //METODO guardar empleado
+
+                        limpiar();
+                        JOptionPane.showMessageDialog(panel1, "Empleado registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+
+                        Empleados empleados = new Empleados();
+                        empleados.setVisible(true);
+                        JFrame frame = (JFrame) SwingUtilities.getRoot(atrasButton);
+                        frame.dispose();
+
+
+
+                    }else {// Si algun Text esta vacio
+                        JOptionPane.showMessageDialog(panel1, "Error al registrar el empleado. Campos vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
+
+                    }
+
+
+
+            }
+        });
+
     }
 
+        public void limpiar(){
+            textNombre.setText("");
+            textApellido.setText("");
+            textDni.setText("");
+            textHorario.setText("");
+            textPuesto.setText("");
+            textSalario.setText("");
+        }
 
 
         public void setVisible(boolean visible){
