@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Locale;
 
 public class RegistrarCliente {
     private JButton atrasButton;
@@ -44,7 +45,6 @@ private double precioTotal;
             public void actionPerformed(ActionEvent e) {
 
             String nombre, apellido, dni, telefono, correoelectronico, precioTotal;
-            // double precioTotal;
 
             nombre = textNombre.getText();
             apellido = textApellido.getText();
@@ -52,10 +52,9 @@ private double precioTotal;
             telefono = textTelefono.getText();
             correoelectronico = textCorreoelectronico.getText();
             precioTotal = textPrecioTotal.getText();
-            // precioTotal = Double.parseDouble(textPrecioTotal.getText());
 
-//            if(!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !telefono.isEmpty() && !correoelectronico.isEmpty() && precioTotal <= 0){
             if(!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !telefono.isEmpty() && !correoelectronico.isEmpty() && !precioTotal.isEmpty()){
+
                 // crea cliente con los datos
                 Cliente cliente = new Cliente();
                 cliente.setNombre(nombre);
@@ -191,7 +190,9 @@ private double precioTotal;
 
 
         // Actualiza el JTextField con el precio total
-        textPrecioTotal.setText(String.format("%.2f", precioTotal));
+        textPrecioTotal.setText(String.format(Locale.US, "%.2f", precioTotal));
+        // textPrecioTotal.setText(String.format(Locale.forLanguageTag("en-US"), "%.2f", precioTotal));
+        // textPrecioTotal.setText(String.format("%.2f", precioTotal));
     }
 
     private void limpiarCampos(){
