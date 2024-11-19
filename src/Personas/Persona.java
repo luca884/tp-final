@@ -16,6 +16,9 @@ public abstract class Persona {
         this.apellido = apellido;
         this.dni = dni;
     }
+    public Persona() {
+    }
+
 
     /* toString */
     @Override

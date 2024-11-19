@@ -23,6 +23,8 @@ public class Cliente extends Persona{
         this.servicio = getServicio();
         this.valor_Total = 0;
     }
+    public Cliente() {
+    }
 
     public int getTelefono() {
         return telefono;
