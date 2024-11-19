@@ -1,8 +1,13 @@
 package InterfazGrafica;
 
+import Excepciones.ElementoDuplicadoException;
+import Gestores.GestorClientes;
+import Personas.Cliente;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class RegistrarCliente {
     private JButton atrasButton;
@@ -38,19 +43,47 @@ private double precioTotal;
             @Override
             public void actionPerformed(ActionEvent e) {
 
-            String nombre, apellido, dni, telefono, correoelectronico;
-            double precioTotal;
+            String nombre, apellido, dni, telefono, correoelectronico, precioTotal;
+            // double precioTotal;
 
             nombre = textNombre.getText();
             apellido = textApellido.getText();
             dni = textDni.getText();
             telefono = textTelefono.getText();
             correoelectronico = textCorreoelectronico.getText();
-            precioTotal = Double.parseDouble(textPrecioTotal.getText());
+            precioTotal = textPrecioTotal.getText();
+            // precioTotal = Double.parseDouble(textPrecioTotal.getText());
 
-            if(!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !telefono.isEmpty() && !correoelectronico.isEmpty() && precioTotal <= 0){
+//            if(!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !telefono.isEmpty() && !correoelectronico.isEmpty() && precioTotal <= 0){
+            if(!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !telefono.isEmpty() && !correoelectronico.isEmpty() && !precioTotal.isEmpty()){
+                // crea cliente con los datos
+                Cliente cliente = new Cliente();
+                cliente.setNombre(nombre);
+                cliente.setApellido(apellido);
+                cliente.setDni(dni);
+                cliente.setTelefono(Long.parseLong(telefono));
+                cliente.setCorreo(correoelectronico);
+                cliente.setValor_Total(Double.parseDouble(textPrecioTotal.getText()));
 
-                //METODO para guardar los clientes
+                // crea gestor
+                GestorClientes gestor_clientes = new GestorClientes();
+
+                // carga clientes guardados en archivo, si existe el archivo
+                File archivo_clientes = new File("clientes.json");
+                if(archivo_clientes.exists()){
+                    gestor_clientes.cargarDesdeArchivo("clientes.json");
+                }
+
+                try {
+                    // agrega cliente al gestor
+                    gestor_clientes.agregar(cliente);
+
+                    // actualiza archivo
+                    gestor_clientes.guardarEnArchivo("clientes.json");
+
+                } catch (ElementoDuplicadoException ex) {
+                    System.err.println(ex.getMessage());
+                }
 
                 limpiarCampos();
                 JOptionPane.showMessageDialog(panel, "Cliente registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
