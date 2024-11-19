@@ -6,14 +6,14 @@ import Enumeraciones.NivelPermisos;
 import Enumeraciones.Servicio;
 
 public class Cliente extends Persona{
-    private int telefono;
+    private Long telefono;
     private String correo;
     private Carpa carpa;
     private Estacionamiento estacionamiento;
     private Servicio servicio;
     private double valor_Total;
 
-    public Cliente(String nombre, String apellido, String dni, int telefono, String correo) {
+    public Cliente(String nombre, String apellido, String dni, Long telefono, String correo) {
         super(nombre, apellido, dni);
         this.nivelPermisos = NivelPermisos.CLIENTE;
         this.telefono = telefono;
@@ -26,11 +26,11 @@ public class Cliente extends Persona{
     public Cliente() {
     }
 
-    public int getTelefono() {
+    public Long getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(int telefono) {
+    public void setTelefono(Long telefono) {
         this.telefono = telefono;
     }
 
