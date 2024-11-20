@@ -7,9 +7,11 @@ import Personas.Empleado;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.HashMap;
 
 public class RegistrarEmpleado {
     private JPanel panel1;
@@ -25,8 +27,7 @@ public class RegistrarEmpleado {
     private JCheckBox checkBoxServicio;
     private JCheckBox checkBoxSpa;
     private JCheckBox checkBoxGuarderia;
-    Empleado empleado = new Empleado();
-    Empleados empleados = new Empleados();
+
 
     private DefaultTableModel modeloTabla;
 
@@ -76,49 +77,98 @@ public class RegistrarEmpleado {
                 }
 
                 if (!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !horario.isEmpty() && !salario.isEmpty()) {
-                    Empleado empleado = new Empleado();
-                    empleado.setNombre(nombre);
-                    empleado.setApellido(apellido);
-                    empleado.setDni(dni);
-                    empleado.setHorario(horario);
-                    empleado.setSalario(Double.valueOf(salario));
-                    empleado.setPuesto(puesto);
+                    // Crear diálogo para usuario y contraseña
+                    final String[] usuario = new String[1];
+                    final String[] contrasena = new String[1];
 
-                    // Crea gestor
-                    GestorEmpleados gestorEmpleados = new GestorEmpleados();
+                    JDialog dialogo = new JDialog((JFrame) null, "Usuario y contraseña", true);
+                    dialogo.setLayout(new BorderLayout());
+                    JPanel editPanel = new JPanel(new GridLayout(6, 4));
 
-                    // Carga empleados guardados en archivo, si existe el archivo
-                    File archivo_empleados = new File("empleados.json");
-                    if (archivo_empleados.exists()) {
-                        gestorEmpleados.cargarDesdeArchivo("empleados.json");
-                    }
+                    JTextField editUsuarioField = new JTextField();
+                    editPanel.add(new JLabel("Usuario:"));
+                    editPanel.add(editUsuarioField);
 
-                    try {
-                        // Agrega empleado al gestor
-                        gestorEmpleados.agregar(empleado);
-                        // Actualiza archivo
-                        gestorEmpleados.guardarEnArchivo("empleados.json");
+                    JPasswordField editContrasenaField = new JPasswordField();
+                    editPanel.add(new JLabel("Contraseña:"));
+                    editPanel.add(editContrasenaField);
 
-                    } catch (ElementoDuplicadoException ex) {
-                        System.err.println(ex.getMessage());
-                    }
+                    JButton confirmButton = new JButton("Confirmar");
+                    Puesto finalPuesto = puesto;
+                    confirmButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            String usuarioIngresado = editUsuarioField.getText().trim();
+                            String contrasenaIngresada = new String(editContrasenaField.getPassword());
 
-                    limpiar();
-                    JOptionPane.showMessageDialog(panel1, "Empleado registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                            if (!usuarioIngresado.isEmpty() && !contrasenaIngresada.isEmpty()) {
+                                if (!usuarioIngresado.equals(contrasenaIngresada)) {
+                                    usuario[0] = usuarioIngresado;
+                                    contrasena[0] = contrasenaIngresada;
 
-                    Empleados empleados = new Empleados();
-                    empleados.cargarDatosEnTabla();
+                                    // Crear empleado y asignar valores
+                                    Empleado empleado = new Empleado();
+                                    empleado.setNombre(nombre);
+                                    empleado.setApellido(apellido);
+                                    empleado.setDni(dni);
+                                    empleado.setHorario(horario);
+                                    empleado.setSalario(Double.valueOf(salario));
+                                    empleado.setPuesto(finalPuesto);
 
-                    empleados.setVisible(true);
-                    JFrame frame = (JFrame) SwingUtilities.getRoot(confirmarButton);
-                    frame.dispose();
+                                    // Asignar credenciales
+                                    HashMap<String, Integer> credenciales = new HashMap<>();
+                                    credenciales.put(usuario[0], contrasena[0].hashCode());
+                                    empleado.setCredenciales(credenciales);
 
-                } else { // Si algún campo está vacío
+                                    // Crear gestor
+                                    GestorEmpleados gestorEmpleados = new GestorEmpleados();
+
+                                    File archivo_empleados = new File("empleados.json");
+                                    if (archivo_empleados.exists()) {
+                                        gestorEmpleados.cargarDesdeArchivo("empleados.json");
+                                    }
+
+                                    try {
+                                        gestorEmpleados.agregar(empleado);
+                                        gestorEmpleados.guardarEnArchivo("empleados.json");
+
+                                        // Mensaje de éxito
+                                        JOptionPane.showMessageDialog(dialogo, "Empleado registrado correctamente con usuario y contraseña.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                                        dialogo.dispose(); // Cierra el diálogo
+                                        limpiar(); // Limpiar campos
+                                        // Cerrar ventana principal y abrir Empleados
+                                        Window mainFrame = SwingUtilities.getWindowAncestor(panel1);
+                                        if (mainFrame != null) {
+                                            mainFrame.dispose();
+                                        }
+                                        Empleados empleados = new Empleados();
+                                        empleados.setVisible(true);
+
+
+                                    } catch (ElementoDuplicadoException ex) {
+                                        JOptionPane.showMessageDialog(panel1, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                                    }
+                                } else {
+                                    JOptionPane.showMessageDialog(dialogo, "El usuario y la contraseña deben ser distintos.", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(dialogo, "Debe completar ambos campos.", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        }
+                    });
+
+                    dialogo.add(editPanel, BorderLayout.CENTER);
+                    dialogo.add(confirmButton, BorderLayout.SOUTH);
+                    dialogo.setSize(new Dimension(300, 220));
+                    dialogo.setLocationRelativeTo(null);
+                    dialogo.setVisible(true);
+
+
+                } else {
                     JOptionPane.showMessageDialog(panel1, "Error al registrar el empleado. Campos vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
-
         // Botón Atras
         atrasButton.addActionListener(new ActionListener() {
             @Override
