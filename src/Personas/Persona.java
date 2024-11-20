@@ -2,6 +2,7 @@ package Personas;
 
 import Enumeraciones.NivelPermisos;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 public abstract class Persona {
@@ -10,6 +11,7 @@ public abstract class Persona {
     private String apellido;
     private String dni;
     protected NivelPermisos nivelPermisos;
+    private HashMap<String, Integer> credenciales = new HashMap<>();
 
     protected Persona(String nombre, String apellido, String dni){
         this.nombre = nombre;
@@ -40,6 +42,22 @@ public abstract class Persona {
         return Objects.hashCode(dni);
     }
 
+    /* metodos */
+    public Boolean comprobarCredenciales(String nombre, String clave){
+        String nombre_usuario = credenciales.keySet().toArray()[0].toString();
+        Integer clave_hashcode = credenciales.get(nombre);
+        return nombre_usuario.equals(nombre) && clave_hashcode == clave.hashCode();
+        /*
+        for(String usuario: credenciales.keySet()){
+            String nombre_usuario = usuario;
+            Integer clave_hashcode = credenciales.get(nombre);
+            return nombre_usuario.equals(nombre) && clave_hashcode == clave.hashCode();
+        }
+        return false;
+        */
+    }
+
+    /* getters y setters */
     public String getNombre() {
         return nombre;
     }
@@ -70,5 +88,13 @@ public abstract class Persona {
 
     public void setNivelPermisos(NivelPermisos nivelPermisos){
         this.nivelPermisos = nivelPermisos;
+    }
+
+    public HashMap<String, Integer> getCredenciales() {
+        return credenciales;
+    }
+
+    public void setCredenciales(HashMap<String, Integer> credenciales) {
+        this.credenciales = credenciales;
     }
 }
