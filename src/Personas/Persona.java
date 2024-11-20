@@ -47,14 +47,6 @@ public abstract class Persona {
         String nombre_usuario = credenciales.keySet().toArray()[0].toString();
         Integer clave_hashcode = credenciales.get(nombre);
         return nombre_usuario.equals(nombre) && clave_hashcode == clave.hashCode();
-        /*
-        for(String usuario: credenciales.keySet()){
-            String nombre_usuario = usuario;
-            Integer clave_hashcode = credenciales.get(nombre);
-            return nombre_usuario.equals(nombre) && clave_hashcode == clave.hashCode();
-        }
-        return false;
-        */
     }
 
     /* getters y setters */
