@@ -37,4 +37,9 @@ public class GestorReservasCarpas extends Gestor<Reserva<Carpa>> {
         Type type = TypeToken.getParameterized(HashSet.class, TypeToken.getParameterized(Reserva.class, Carpa.class).getType()).getType();
         super.cargarDesdeArchivo(nombre_archivo, type);
     }
+
+    public void agregarAlArchivo(Reserva reserva, String nombre_archivo) {
+        Type type = TypeToken.getParameterized(HashSet.class, TypeToken.getParameterized(Reserva.class, Carpa.class).getType()).getType();
+        super.agregarAlArchivo(reserva, nombre_archivo, type);
+    }
 }
