@@ -1,1 +1,35 @@
-[{"telefono":534543,"correo":"greger","valor_Total":1750000.0,"nombre":"hgfhfg","apellido":"hfghfg","dni":"543534"},{"telefono":323323232,"correo":"fdefwefwe","valor_Total":1750000.0,"nombre":"fdsafsd","apellido":"fadsfads","dni":"31233233"},{"telefono":2233344114,"correo":"leonar@gmail.com","carpa":"VIP","estacionamiento":"VIP","servicio":"GUARDERIA_Y_SPA","valor_Total":2200000.0,"nombre":"leonardo","apellido":"mariño","dni":"434342434"}]
+[
+  {
+    "telefono": 2239876543,
+    "correo": "carlosrodriguez@hotmail.com",
+    "valor_Total": 1250000.0,
+    "nombre": "Carlos",
+    "apellido": "Rodríguez",
+    "dni": "40987654",
+    "credenciales": {
+      "carlos_rodriguez": 1073943909
+    }
+  },
+  {
+    "telefono": 2235678901,
+    "correo": "ana.martinez@outlook.com",
+    "valor_Total": 1250000.0,
+    "nombre": "Ana",
+    "apellido": "Martínez",
+    "dni": "43123456",
+    "credenciales": {
+      "ana.martinez99": 1433391409
+    }
+  },
+  {
+    "telefono": 2231234567,
+    "correo": "maria.gomez@gmail.com",
+    "valor_Total": 1300000.0,
+    "nombre": "María",
+    "apellido": "Gómez",
+    "dni": "42876543",
+    "credenciales": {
+      "juanperez123": 1306522479
+    }
+  }
+]
