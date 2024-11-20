@@ -110,7 +110,7 @@ public class MenuGerente {
             public void actionPerformed(ActionEvent e) {
                 Guarderia guarderia = new Guarderia();
                 guarderia.setVisible(true);
-                JFrame frame = (JFrame) SwingUtilities.getRoot(mantenimientoButton);
+                JFrame frame = (JFrame) SwingUtilities.getRoot(guarderiaButton);
                 frame.dispose();
                 System.out.println("Botón Guardería presionado");
             }
@@ -121,9 +121,12 @@ public class MenuGerente {
         salirButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                IniciarSesion iniciarSesion = new IniciarSesion();
+                iniciarSesion.setVisible(true);
+                JFrame frame = (JFrame) SwingUtilities.getRoot(salirButton);
+                frame.dispose();
 
-                System.out.println("Botón Salir presionado");
-                System.exit(0); // Cerrar la aplicación
+
             }
         });
 

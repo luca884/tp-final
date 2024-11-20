@@ -24,7 +24,7 @@ public class MenuEmpleado {
     private GestorEmpleados gestorEmpleados = new GestorEmpleados();
 
 
-    public MenuEmpleado(){
+    public MenuEmpleado(Empleado empleado){
 
         cargarDatosEnTabla();
 

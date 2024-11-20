@@ -9,7 +9,6 @@ import Personas.Empleado;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class IniciarSesion {
     private JPanel panel1;
@@ -17,9 +16,21 @@ public class IniciarSesion {
     private JButton nuevoClienteButton;
     private JTextField textUsuario;
     private JPasswordField textContraseña;
+    private JButton cerrarButton;
 
 
     public IniciarSesion (){
+        //Cerrar el programa
+        cerrarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Botón Salir presionado");
+                System.exit(0);
+
+                // Cerrar la aplicación
+            }
+        });
+
         nuevoClienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -50,9 +61,15 @@ public class IniciarSesion {
                 if (cliente != null) {
                     // comprueba si las credenciales ingresadas son correctas
                     if (cliente.comprobarCredenciales(usuario_ingresado, contraseña_ingresada)) {
-                        // cliente ingresado con exito
-                        // aca iria el menu clientes
+                        MenuUsuario menuUsuario = new MenuUsuario(cliente);
+                        menuUsuario.setVisible(true);
+                        JFrame frame = (JFrame) SwingUtilities.getRoot(iniciarSesionButton);
+                        frame.dispose();
+
+                        System.out.println("ENCONTRO CLIENTE");
                     }
+                }else {
+                    System.out.println("NO ENCONTRO CLIENTE");
                 }
 
 
@@ -61,6 +78,7 @@ public class IniciarSesion {
                     // busca empleado con nombre de usuario igual al ingresado
                     Empleado empleado = gestor_empleados.buscarPorUsuario(usuario_ingresado);
 
+
                     // si encuentra al empleado
                     if (empleado != null) {
                         // comprueba si las credenciales ingresadas son correctas
@@ -68,18 +86,22 @@ public class IniciarSesion {
                             // empleado ingresado con exito
                             if (empleado.getPuesto() == Puesto.ADMINISTRADOR) {
                                 // menu administrador
+                                MenuGerente menuGerente = new MenuGerente();
+                                menuGerente.setVisible(true);
+                                JFrame frame = (JFrame) SwingUtilities.getRoot(iniciarSesionButton);
+                                frame.dispose();
+                                System.out.println("ENCONTRO ADMINISTRADOR");
                             } else {
                                 // menu demas empleados
+                                MenuEmpleado menuEmpleado = new MenuEmpleado(empleado);
+                                menuEmpleado.setVisible(true);
+                                JFrame frame = (JFrame) SwingUtilities.getRoot(iniciarSesionButton);
+                                frame.dispose();
+                                System.out.println("ENCONTRO EMPLEADO");
                             }
                         }
                     }
                 }
-
-                /*
-                if(cliente == null && empleado == null){
-                    // no existe el usuario
-                }
-                */
             }
         });
 

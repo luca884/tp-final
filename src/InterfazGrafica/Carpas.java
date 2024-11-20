@@ -22,6 +22,11 @@ public class Carpas {
                 frame.dispose();
             }
         });
+
+        ///Informacion de las CARPAS
+
+
+
     }
 
     public void setVisible(boolean visible){
