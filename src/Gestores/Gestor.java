@@ -7,6 +7,8 @@ import Personas.Empleado;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,7 +22,6 @@ public abstract class Gestor<T> {
     private Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
 
 
-
     /* constructores */
     public Gestor() {
     }
@@ -32,14 +33,14 @@ public abstract class Gestor<T> {
 
     /* metodos */
     public void agregar(T item) throws ElementoDuplicadoException {
-        if(lista.contains(item)){
+        if (lista.contains(item)) {
             throw new ElementoDuplicadoException("El elemento ya se encuentra en la lista");
         }
         lista.add(item);
     }
 
     public void eliminar(T item) throws ElementoNoEncontradoException {
-        if(!lista.contains(item)){
+        if (!lista.contains(item)) {
             throw new ElementoNoEncontradoException("El elemento no se encontró en la lista");
         }
         lista.remove(item);
@@ -82,7 +83,7 @@ public abstract class Gestor<T> {
     }
 
     public void cargarDesdeArchivo(String nombre_archivo, Class<T> clazz) {
-        System.out.println("Carga de archivo: "+ nombre_archivo);
+        System.out.println("Carga de archivo: " + nombre_archivo);
         Type type = TypeToken.getParameterized(HashSet.class, clazz).getType();
         cargarDesdeArchivo(nombre_archivo, type);
     }
@@ -92,6 +93,24 @@ public abstract class Gestor<T> {
             setLista(gson.fromJson(reader, type));
         } catch (IOException e) {
             System.err.println(e.getMessage());
+        }
+    }
+
+    public void agregarAlArchivo(T item, String nombre_archivo, Class<T> clazz) {
+        // carga clientes guardados en archivo, si existe el archivo
+        File archivo = new File(nombre_archivo);
+        if (archivo.exists()) {
+            cargarDesdeArchivo(nombre_archivo, clazz);
+        }
+
+        try {
+            // agrega cliente al gestor
+            agregar(item);
+
+            // actualiza archivo
+            guardarEnArchivo(nombre_archivo);
+        } catch (ElementoDuplicadoException ex) {
+            System.err.println(ex.getMessage());
         }
     }
 
