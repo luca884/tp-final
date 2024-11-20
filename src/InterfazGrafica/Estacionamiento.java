@@ -24,6 +24,8 @@ public class Estacionamiento {
     }
 
 
+
+
     public void setVisible(boolean visible){
         JFrame frame = new JFrame("Estacionamiento");
         frame.setContentPane(panel); //Asigna el contenido a la ventana
