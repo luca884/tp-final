@@ -1,10 +1,15 @@
 package InterfazGrafica;
 
+import Excepciones.ElementoDuplicadoException;
+import Excepciones.ElementoNoEncontradoException;
+import Gestores.GestorMantenimiento;
+import Varios.Mantenimiento;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
 
 public class IGMantenimiento {
     private JTable tablaMantenimiento;
@@ -15,11 +20,16 @@ public class IGMantenimiento {
     private JButton registrarButton;
     private JScrollPane scrollPane;
     private DefaultTableModel modeloTabla;
+    private GestorMantenimiento gestorMantenimiento = new GestorMantenimiento();
 
-    public IGMantenimiento() {
+    public IGMantenimiento(){
+        //Cargar datos
+        gestorMantenimiento.cargarDesdeArchivo("mantenimiento.json", Mantenimiento.class);
+        //Cargar datos al entrar
+        cargarDatosEnTabla();
 
 
-        // Acción para el botón de volver atrás
+
         atrasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -30,8 +40,8 @@ public class IGMantenimiento {
             }
         });
 
-        // Acción para registrar nuevo mantenimiento
         registrarButton.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 MantenimientoRegistrar mantenimientoRegistrar = new MantenimientoRegistrar();
@@ -41,16 +51,41 @@ public class IGMantenimiento {
             }
         });
 
-        // Acción para editar mantenimiento
+        borrarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int[] filasSeleccionadas = tablaMantenimiento.getSelectedRows();
+
+                if (filasSeleccionadas.length > 0) {
+                    int confirmacion = JOptionPane.showConfirmDialog(
+                            panel,
+                            "¿Estás seguro de que deseas eliminar estos mantenimientos?",
+                            "Confirmar eliminación",
+                            JOptionPane.YES_NO_OPTION);
+
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        for (int i = filasSeleccionadas.length - 1; i >= 0; i--) {
+                            String dniMantenimiento = (String) modeloTabla.getValueAt(filasSeleccionadas[i], 0);
+                            borrarMantenimiento(dniMantenimiento);
+                            modeloTabla.removeRow(filasSeleccionadas[i]);
+                        }
+                        cargarDatosEnTabla(); // Actualiza los cambios
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(panel, "Seleccione al menos un mantenimiento para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
         editarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int filaSeleccionada = tablaMantenimiento.getSelectedRow();
                 if (filaSeleccionada != -1) {
                     // Obtener los datos de la fila seleccionada
-                    String id = (String) modeloTabla.getValueAt(filaSeleccionada, 0);
+                    String dni = (String) modeloTabla.getValueAt(filaSeleccionada, 0);
                     String descripcion = (String) modeloTabla.getValueAt(filaSeleccionada, 1);
-                    String fecha = (String) modeloTabla.getValueAt(filaSeleccionada, 2);
+                    double costo = (double) modeloTabla.getValueAt(filaSeleccionada, 2);
                     String estado = (String) modeloTabla.getValueAt(filaSeleccionada, 3);
 
                     // Crear un JDialog para editar el mantenimiento
@@ -59,30 +94,67 @@ public class IGMantenimiento {
 
                     JPanel editPanel = new JPanel(new GridLayout(4, 2));
                     JTextField editDescripcionField = new JTextField(descripcion);
-                    JTextField editFechaField = new JTextField(fecha);
+                    JTextField editCostoField = new JTextField(String.valueOf(costo));
                     JTextField editEstadoField = new JTextField(estado);
 
                     editPanel.add(new JLabel("Descripción:"));
                     editPanel.add(editDescripcionField);
-                    editPanel.add(new JLabel("Fecha de Mantenimiento:"));
-                    editPanel.add(editFechaField);
+                    editPanel.add(new JLabel("Costo:"));
+                    editPanel.add(editCostoField);
                     editPanel.add(new JLabel("Estado:"));
                     editPanel.add(editEstadoField);
 
                     JButton confirmButton = new JButton("Confirmar");
                     confirmButton.addActionListener(e1 -> {
-                        // Actualizar los datos en la tabla
-                        modeloTabla.setValueAt(editDescripcionField.getText(), filaSeleccionada, 1);
-                        modeloTabla.setValueAt(editFechaField.getText(), filaSeleccionada, 2);
-                        modeloTabla.setValueAt(editEstadoField.getText(), filaSeleccionada, 3);
+                        try {
+                            // Obtener los datos editados
+                            double nuevoCosto = Double.parseDouble(editCostoField.getText());
+                            String nuevoEstado = editEstadoField.getText();
 
-                        // Cerrar el diálogo
-                        dialog.dispose();
+                            // Crear el nuevo objeto Mantenimiento
+                            Mantenimiento mantenimientoEditado = new Mantenimiento(
+                                    dni,  // Mantener el DNI original
+                                    editDescripcionField.getText(),
+                                    nuevoCosto,
+                                    nuevoEstado
+                            );
+
+                            // Buscar el mantenimiento por DNI en la lista
+                            Mantenimiento mantenimientoSeleccionado = null;
+                            for (Mantenimiento mantenimiento : gestorMantenimiento.getLista()) {
+                                if (mantenimiento.getDni().equals(dni)) {
+                                    mantenimientoSeleccionado = mantenimiento;
+                                    break;
+                                }
+                            }
+
+                            if (mantenimientoSeleccionado != null) {
+                                // Eliminar el mantenimiento anterior y agregar el editado
+                                gestorMantenimiento.eliminar(mantenimientoSeleccionado);
+                                gestorMantenimiento.agregar(mantenimientoEditado);
+
+                                // Guardar los cambios en el archivo JSON
+                                gestorMantenimiento.guardarEnArchivo("mantenimiento.json");
+
+                                // Actualizar la tabla
+                                modeloTabla.setValueAt(editDescripcionField.getText(), filaSeleccionada, 1);
+                                modeloTabla.setValueAt(nuevoCosto, filaSeleccionada, 2);
+                                modeloTabla.setValueAt(nuevoEstado, filaSeleccionada, 3);
+
+                                dialog.dispose(); // Cerrar el diálogo
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Mantenimiento no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(null, "Error al editar el costo", "Error", JOptionPane.ERROR_MESSAGE);
+                        } catch (ElementoDuplicadoException | ElementoNoEncontradoException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        }
                     });
 
                     dialog.add(editPanel, BorderLayout.CENTER);
                     dialog.add(confirmButton, BorderLayout.SOUTH);
-                    dialog.setSize(new Dimension(350, 200));
+                    dialog.setSize(new Dimension(350, 250));  // Ajustado para los nuevos campos
                     dialog.setLocationRelativeTo(null);
                     dialog.setVisible(true);
                 } else {
@@ -91,61 +163,65 @@ public class IGMantenimiento {
             }
         });
 
-        // Acción para borrar mantenimiento
-        borrarButton.addActionListener(e -> {
-            int[] filasSeleccionadas = tablaMantenimiento.getSelectedRows();
 
-            if (filasSeleccionadas.length > 0) {
-                int confirmacion = JOptionPane.showConfirmDialog(
-                        panel,
-                        "¿Estás seguro de que deseas eliminar estos mantenimientos?",
-                        "Confirmar eliminación",
-                        JOptionPane.YES_NO_OPTION);
 
-                if (confirmacion == JOptionPane.YES_OPTION) {
-                    // Eliminar las filas seleccionadas
-                    for (int i = filasSeleccionadas.length - 1; i >= 0; i--) {
-                        modeloTabla.removeRow(filasSeleccionadas[i]);
-                    }
-                }
-            } else {
-                JOptionPane.showMessageDialog(panel, "Seleccione al menos un mantenimiento para eliminar.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+
+
+    }
+
+
+    public void setVisible(boolean visible){
+        JFrame frame = new JFrame("Mantenimiento" );
+        frame.setContentPane(panel); //Asigna el contenido a la ventana
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cierra la ventana, pero no para el programa
+        frame.pack(); //Ajusta el tamaño del JFrame para que encaje con el contenido
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); //Muestra la ventana en pantalla completa
+        frame.requestFocusInWindow(); //Hace foco a la ventana
+        frame.setLocationRelativeTo(null); //Coloca el JFrame en el centro de la pantalla
+        frame.setVisible(visible); //Muestra la ventana si "visible" es true
+    }
+
+    private void borrarMantenimiento(String dni) {
+        Mantenimiento mantenimientoParaEliminar = null;
+        for (Mantenimiento mantenimiento : gestorMantenimiento.getLista()) {
+            if (mantenimiento.getDni().equals(dni)) {
+                mantenimientoParaEliminar = mantenimiento;
+                break;
             }
-        });
-    }
-
-    public void setVisible(boolean visible) {
-        // Cuando se hace visible la ventana, recarga los datos en la tabla
-        if (visible) {
-            cargarDatosEnTabla(); // Asegura que la tabla se actualice al abrir la ventana
         }
-
-        JFrame frame = new JFrame("Mantenimiento");
-        frame.setContentPane(panel); // Asigna el contenido a la ventana
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Cierra la ventana, pero no para el programa
-        frame.pack(); // Ajusta el tamaño del JFrame para que encaje con el contenido
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Muestra la ventana en pantalla completa
-        frame.setLocationRelativeTo(null); // Coloca el JFrame en el centro de la pantalla
-        frame.setVisible(visible); // Muestra la ventana si "visible" es true
+        if (mantenimientoParaEliminar != null) {
+            try {
+                gestorMantenimiento.eliminar(mantenimientoParaEliminar);
+                gestorMantenimiento.guardarEnArchivo("mantenimiento.json");
+            } catch (ElementoNoEncontradoException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 
-    private void cargarDatosEnTabla() {
-        // Inicializar la tabla y el modelo de datos
-        String[] columnas = {"ID", "Descripción", "Fecha de Mantenimiento", "Estado"};
-        modeloTabla = new DefaultTableModel(columnas, 0);
-        // Aquí puedes cargar los datos desde una fuente (por ejemplo, archivo o base de datos)
-        // Ejemplo de datos estáticos para la tabla
-        String[][] datos = {
-                {"1", "Mantenimiento de aire acondicionado", "2024-11-20", "Pendiente"},
-                {"2", "Reemplazo de bombillos", "2024-11-19", "Completado"}
-        };
+
+    private void cargarDatosEnTabla(){
+        //Configurar las columnas
+        String[] columnas = {"DNI", "DESCRIPCION", "COSTO", "ESTADO"};
+        modeloTabla = new DefaultTableModel(columnas,0);
+        HashSet<Mantenimiento> mantenimientoList = gestorMantenimiento.getLista();
 
         // Agregar filas con los datos
-        for (String[] fila : datos) {
-            modeloTabla.addRow(fila);
+        for (Mantenimiento mantenimiento : mantenimientoList) {
+            modeloTabla.addRow(new Object[]{
+                    mantenimiento.getDni(),
+                    mantenimiento.getDescripcion(),
+                    mantenimiento.getCosto(),
+                    mantenimiento.getEstado()
+            });
         }
 
-        // Asignar el modelo al JTable
+        //Asignar el modelo al JTable
         tablaMantenimiento.setModel(modeloTabla);
+
     }
+
+
+
+
 }

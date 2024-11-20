@@ -34,8 +34,6 @@ public class RegistrarEmpleado {
                     String nombre, apellido, dni, horario, salario;
                     Puesto puesto = null;
 
-
-
                     nombre = textNombre.getText();
                     apellido = textApellido.getText();
                     dni = textDni.getText();
