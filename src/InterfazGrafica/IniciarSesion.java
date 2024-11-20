@@ -19,7 +19,7 @@ public class IniciarSesion {
     private JPasswordField textContraseña;
 
 
-    public IniciarSesion() {
+    public IniciarSesion (){
         nuevoClienteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,6 +102,7 @@ public class IniciarSesion {
         IniciarSesion iniciarSesion = new IniciarSesion();
         iniciarSesion.setVisible(true);
     }
+
 
 
 }
