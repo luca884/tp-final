@@ -185,37 +185,6 @@ private Cliente cliente = new Cliente();
             precioTotal = textPrecioTotal.getText();
 
             if(!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !telefono.isEmpty() && !correoelectronico.isEmpty() && !precioTotal.isEmpty()){
-
-                // crea cliente con los datos
-
-                cliente.setNombre(nombre);
-                cliente.setApellido(apellido);
-                cliente.setDni(dni);
-                cliente.setTelefono(Long.valueOf(telefono));
-                cliente.setCorreo(correoelectronico);
-                cliente.setValor_Total(Double.parseDouble(textPrecioTotal.getText()));
-
-
-
-                // crea gestor
-                GestorClientes gestor_clientes = new GestorClientes();
-
-                // carga clientes guardados en archivo, si existe el archivo
-                File archivo_clientes = new File("clientes.json");
-                if(archivo_clientes.exists()){
-                    gestor_clientes.cargarDesdeArchivo("clientes.json");
-                }
-
-                try {
-                    // agrega cliente al gestor
-                    gestor_clientes.agregar(cliente);
-
-                    // actualiza archivo
-                    gestor_clientes.guardarEnArchivo("clientes.json");
-
-                } catch (ElementoDuplicadoException ex) {
-                    System.err.println(ex.getMessage());
-                }
                 // Variables para usuario y contraseña
                 final String[] usuario = new String[1];   // Variable para el usuario
                 final String[] contrasena = new String[1]; // Variable para la contraseña
@@ -225,12 +194,12 @@ private Cliente cliente = new Cliente();
                 dialogo.setLayout(new BorderLayout());
                 JPanel editPanel = new JPanel(new GridLayout(6, 4));
 
-                    // Campo para el usuario
+                // Campo para el usuario
                 JTextField editUsuarioField = new JTextField();
                 editPanel.add(new JLabel("Usuario:"));
                 editPanel.add(editUsuarioField);
 
-                    // Campo para la contraseña
+                // Campo para la contraseña
                 JPasswordField editContrasenaField = new JPasswordField();
                 editPanel.add(new JLabel("Contraseña:"));
                 editPanel.add(editContrasenaField);
@@ -270,7 +239,7 @@ private Cliente cliente = new Cliente();
                                 GestorClientes gestor_clientes = new GestorClientes();
 
                                 // agrega cliente a archivo
-                                gestor_clientes.agregarAlArchivo(cliente, "clientes.json", Cliente.class);
+                                gestor_clientes.agregarAlArchivo(cliente, "clientes.json");
 
                                 // Mensaje de éxito
                                 JOptionPane.showMessageDialog(dialogo, "Usuario y contraseña guardados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
