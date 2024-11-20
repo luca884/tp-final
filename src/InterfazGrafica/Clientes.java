@@ -10,6 +10,8 @@ import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Clientes {
@@ -123,30 +125,65 @@ public class Clientes {
         List<Cliente> listaClientes = gestorClientes.getLista().stream().toList();
 
         // Configurar las columnas de la tabla
-        String[] columnas = {"DNI", "Nombre", "Apellido", "Teléfono", "Correo Electrónico"};
-        DefaultTableModel modelo = new DefaultTableModel(columnas, 0);
+        // Inicia con las columnas básicas
+        List<String> columnas = new ArrayList<>(Arrays.asList("DNI", "Nombre", "Apellido", "Teléfono", "Correo Electrónico"));
+
+        // Verificar si agregar columnas adicionales basadas en los atributos del cliente
+        for (Cliente cliente : listaClientes) {
+            if (cliente.getCarpa() != null) {
+                if (!columnas.contains("Carpa")) {
+                    columnas.add("Carpa");
+                }
+            }
+            if (cliente.getEstacionamiento() != null) {
+                if (!columnas.contains("Estacionamiento")) {
+                    columnas.add("Estacionamiento");
+                }
+            }
+            if (cliente.getServicio() != null) {
+                if (!columnas.contains("Servicio")) {
+                    columnas.add("Servicio");
+                }
+            }
+        }
+
+        // Convertir la lista de columnas en un arreglo para el DefaultTableModel
+        String[] columnasArray = columnas.toArray(new String[0]);
+        DefaultTableModel modelo = new DefaultTableModel(columnasArray, 0);
 
         // Asegurarse de que la tabla no tenga filas previas
         modelo.setRowCount(0);  // Vacía las filas de la tabla
 
         // Agregar filas con los datos de los clientes
-        int contador = 0;
         for (Cliente cliente : listaClientes) {
-            modelo.addRow(new Object[]{
-                    cliente.getDni(),
-                    cliente.getNombre(),
-                    cliente.getApellido(),
-                    cliente.getTelefono(),
-                    cliente.getCorreo()
-            });
-            contador++;
+            List<Object> row = new ArrayList<>();
+            row.add(cliente.getDni());
+            row.add(cliente.getNombre());
+            row.add(cliente.getApellido());
+            row.add(cliente.getTelefono());
+            row.add(cliente.getCorreo());
+
+            // Agregar datos de Carpa, Estacionamiento y Servicio si corresponden
+            if (columnas.contains("Carpa")) {
+                row.add(cliente.getCarpa());
+            }
+            if (columnas.contains("Estacionamiento")) {
+                row.add(cliente.getEstacionamiento() != null ? cliente.getEstacionamiento() : "No tiene");
+            }
+            if (columnas.contains("Servicio")) {
+                row.add(cliente.getServicio() != null ? cliente.getServicio() : "No tiene");
+            }
+
+            modelo.addRow(row.toArray());
         }
 
-        // Muestra cuántos clientes fueron añadidos
-        System.out.println("Número de clientes añadidos a la tabla: " + contador);
         // Asignar el modelo al JTable
         TablaClientes.setModel(modelo);
-}
+
+        // Mostrar en consola cuántos clientes fueron añadidos
+        System.out.println("Número de clientes añadidos a la tabla: " + listaClientes.size());
+    }
+
 
 
 

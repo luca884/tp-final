@@ -1,6 +1,7 @@
 package InterfazGrafica;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,7 +16,8 @@ public class Carpas {
         atrasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                MenuGerente menuGerente = new MenuGerente();
+                menuGerente.setVisible(true);
                 JFrame frame = (JFrame) SwingUtilities.getRoot(atrasButton);
                 frame.dispose();
             }

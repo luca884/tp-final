@@ -74,24 +74,38 @@ public class Empleados {
                     JDialog dialog = new JDialog((JFrame) null, "Editar Empleado", true);
                     dialog.setLayout(new BorderLayout());
 
-                    JPanel editPanel = new JPanel(new GridLayout(7, 2));  // Modificar a 7 filas para agregar los puestos
+                    JPanel editPanel = new JPanel(new GridLayout(8, 2));  // Modificar a 8 filas para los puestos
                     JTextField editNombreField = new JTextField(nombre);
                     JTextField editApellidoField = new JTextField(apellido);
                     JTextField editSalarioField = new JTextField(String.valueOf(salario));
                     JTextField editHorarioField = new JTextField(horario);  // Campo para editar horario
 
-                    // Crear los JCheckBox para los puestos
-                    JCheckBox mantenimientoCheckBoxCheckBox = new JCheckBox(Puesto.MANTENIMIENTO.name());
-                    JCheckBox administradorCheckBox = new JCheckBox(Puesto.ADMINISTRADOR.name());
-                    JCheckBox servicioCheckBox = new JCheckBox(Puesto.SERVICIO_AL_CLIENTE.name());
+                    // Crear los JRadioButton para los puestos
+                    JRadioButton mantenimientoRadioButton = new JRadioButton(Puesto.MANTENIMIENTO.name());
+                    JRadioButton administradorRadioButton = new JRadioButton(Puesto.ADMINISTRADOR.name());
+                    JRadioButton servicioRadioButton = new JRadioButton(Puesto.SERVICIO_AL_CLIENTE.name());
+                    JRadioButton spaRadioButton = new JRadioButton(Puesto.SPA.name());
+                    JRadioButton guarderiaRadioButton = new JRadioButton(Puesto.GUARDERIA.name());
 
-                    // Marcar el CheckBox que corresponde al puesto actual
+                    // Crear un ButtonGroup para los RadioButton
+                    ButtonGroup puestoButtonGroup = new ButtonGroup();
+                    puestoButtonGroup.add(mantenimientoRadioButton);
+                    puestoButtonGroup.add(administradorRadioButton);
+                    puestoButtonGroup.add(servicioRadioButton);
+                    puestoButtonGroup.add(spaRadioButton);
+                    puestoButtonGroup.add(guarderiaRadioButton);
+
+                    // Marcar el RadioButton que corresponde al puesto actual
                     if (puesto == Puesto.MANTENIMIENTO) {
-                        mantenimientoCheckBoxCheckBox.setSelected(true);
+                        mantenimientoRadioButton.setSelected(true);
                     } else if (puesto == Puesto.ADMINISTRADOR) {
-                        administradorCheckBox.setSelected(true);
+                        administradorRadioButton.setSelected(true);
                     } else if (puesto == Puesto.SERVICIO_AL_CLIENTE) {
-                        servicioCheckBox.setSelected(true);
+                        servicioRadioButton.setSelected(true);
+                    } else if (puesto == Puesto.SPA) {
+                        spaRadioButton.setSelected(true);
+                    } else if (puesto == Puesto.GUARDERIA) {
+                        guarderiaRadioButton.setSelected(true);
                     }
 
                     // Añadir los componentes al panel
@@ -104,114 +118,88 @@ public class Empleados {
                     editPanel.add(new JLabel("Horario:"));  // Nueva etiqueta para el horario
                     editPanel.add(editHorarioField);  // Nuevo campo de texto para el horario
                     editPanel.add(new JLabel("Puesto:"));
-                    editPanel.add(mantenimientoCheckBoxCheckBox);
+                    editPanel.add(mantenimientoRadioButton);
                     editPanel.add(new JLabel(""));
-                    editPanel.add(administradorCheckBox);
+                    editPanel.add(administradorRadioButton);
                     editPanel.add(new JLabel(""));
-                    editPanel.add(servicioCheckBox);
-
-                    // Hacer que solo uno de los CheckBox pueda estar seleccionado a la vez
-                    mantenimientoCheckBoxCheckBox.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            if (mantenimientoCheckBoxCheckBox.isSelected()) {
-                                administradorCheckBox.setSelected(false);
-                                servicioCheckBox.setSelected(false);
-                            }
-                        }
-                    });
-
-                    administradorCheckBox.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            if (administradorCheckBox.isSelected()) {
-                                mantenimientoCheckBoxCheckBox.setSelected(false);
-                                servicioCheckBox.setSelected(false);
-                            }
-                        }
-                    });
-
-                    servicioCheckBox.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            if (servicioCheckBox.isSelected()) {
-                                mantenimientoCheckBoxCheckBox.setSelected(false);
-                                administradorCheckBox.setSelected(false);
-                            }
-                        }
-                    });
+                    editPanel.add(servicioRadioButton);
+                    editPanel.add(new JLabel(""));
+                    editPanel.add(spaRadioButton);
+                    editPanel.add(new JLabel(""));
+                    editPanel.add(guarderiaRadioButton);
 
                     JButton confirmButton = new JButton("Confirmar");
-                        confirmButton.addActionListener(e1 -> {
-                            try {
-                                // Obtener los datos editados
-                                double nuevoSalario = Double.parseDouble(editSalarioField.getText());
-                                String nuevoHorario = editHorarioField.getText();
+                    confirmButton.addActionListener(e1 -> {
+                        try {
+                            // Obtener los datos editados
+                            double nuevoSalario = Double.parseDouble(editSalarioField.getText());
+                            String nuevoHorario = editHorarioField.getText();
 
-                                // Determinar el puesto seleccionado
-                                Puesto puestoSeleccionado = null;
-                                if (mantenimientoCheckBoxCheckBox.isSelected()) {
-                                    puestoSeleccionado = Puesto.MANTENIMIENTO;
-                                } else if (administradorCheckBox.isSelected()) {
-                                    puestoSeleccionado = Puesto.ADMINISTRADOR;
-                                } else if (servicioCheckBox.isSelected()) {
-                                    puestoSeleccionado = Puesto.SERVICIO_AL_CLIENTE;
-                                }
-
-                                // Obtener el DNI de la fila seleccionada
-                                String dniSeleccionado = (String) modeloTabla.getValueAt(filaSeleccionada, 0);  // Asumiendo que la columna 0 contiene el DNI
-
-                                // Buscar el empleado por DNI en la lista
-                                Empleado empleadoSeleccionado = null;
-                                for (Empleado empleado : gestorEmpleados.getLista()) {
-                                    if (empleado.getDni().equals(dniSeleccionado)) {
-                                        empleadoSeleccionado = empleado;
-                                        break;
-                                    }
-                                }
-
-                                if (empleadoSeleccionado != null) {
-                                    // Crear el nuevo objeto Empleado
-                                    Empleado empleadoEditado = new Empleado(
-                                            editNombreField.getText(),
-                                            editApellidoField.getText(),
-                                            dniSeleccionado, // Mantener el DNI original
-                                            nuevoHorario,
-                                            puestoSeleccionado,
-                                            nuevoSalario
-                                    );
-
-                                    // Eliminar el empleado anterior y agregar el editado
-                                    gestorEmpleados.eliminar(empleadoSeleccionado);
-                                    gestorEmpleados.agregar(empleadoEditado);
-
-                                    // Guardar los cambios en el archivo JSON
-                                    gestorEmpleados.guardarEnArchivo("empleados.json");
-
-                                    // Actualizar la tabla
-                                    modeloTabla.setValueAt(editNombreField.getText(), filaSeleccionada, 1);
-                                    modeloTabla.setValueAt(editApellidoField.getText(), filaSeleccionada, 2);
-                                    modeloTabla.setValueAt(puestoSeleccionado.name(), filaSeleccionada, 3);
-                                    modeloTabla.setValueAt(nuevoSalario, filaSeleccionada, 4);
-                                    modeloTabla.setValueAt(nuevoHorario, filaSeleccionada, 5);
-
-                                    dialog.dispose(); // Cerrar el diálogo
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Empleado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
-                                }
-                            } catch (NumberFormatException ex) {
-                                JOptionPane.showMessageDialog(null, "Error al editar el salario", "Error", JOptionPane.ERROR_MESSAGE);
-                            } catch (ElementoDuplicadoException | ElementoNoEncontradoException ex) {
-                                JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                            // Determinar el puesto seleccionado
+                            Puesto puestoSeleccionado = null;
+                            if (mantenimientoRadioButton.isSelected()) {
+                                puestoSeleccionado = Puesto.MANTENIMIENTO;
+                            } else if (administradorRadioButton.isSelected()) {
+                                puestoSeleccionado = Puesto.ADMINISTRADOR;
+                            } else if (servicioRadioButton.isSelected()) {
+                                puestoSeleccionado = Puesto.SERVICIO_AL_CLIENTE;
+                            } else if (spaRadioButton.isSelected()) {
+                                puestoSeleccionado = Puesto.SPA;
+                            } else if (guarderiaRadioButton.isSelected()) {
+                                puestoSeleccionado = Puesto.GUARDERIA;
                             }
-                        });
 
+                            // Obtener el DNI de la fila seleccionada
+                            String dniSeleccionado = (String) modeloTabla.getValueAt(filaSeleccionada, 0);  // Asumiendo que la columna 0 contiene el DNI
 
+                            // Buscar el empleado por DNI en la lista
+                            Empleado empleadoSeleccionado = null;
+                            for (Empleado empleado : gestorEmpleados.getLista()) {
+                                if (empleado.getDni().equals(dniSeleccionado)) {
+                                    empleadoSeleccionado = empleado;
+                                    break;
+                                }
+                            }
 
+                            if (empleadoSeleccionado != null) {
+                                // Crear el nuevo objeto Empleado
+                                Empleado empleadoEditado = new Empleado(
+                                        editNombreField.getText(),
+                                        editApellidoField.getText(),
+                                        dniSeleccionado, // Mantener el DNI original
+                                        nuevoHorario,
+                                        puestoSeleccionado,
+                                        nuevoSalario
+                                );
 
-                        dialog.add(editPanel, BorderLayout.CENTER);
+                                // Eliminar el empleado anterior y agregar el editado
+                                gestorEmpleados.eliminar(empleadoSeleccionado);
+                                gestorEmpleados.agregar(empleadoEditado);
+
+                                // Guardar los cambios en el archivo JSON
+                                gestorEmpleados.guardarEnArchivo("empleados.json");
+
+                                // Actualizar la tabla
+                                modeloTabla.setValueAt(editNombreField.getText(), filaSeleccionada, 1);
+                                modeloTabla.setValueAt(editApellidoField.getText(), filaSeleccionada, 2);
+                                modeloTabla.setValueAt(puestoSeleccionado.name(), filaSeleccionada, 3);
+                                modeloTabla.setValueAt(nuevoSalario, filaSeleccionada, 4);
+                                modeloTabla.setValueAt(nuevoHorario, filaSeleccionada, 5);
+
+                                dialog.dispose(); // Cerrar el diálogo
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Empleado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } catch (NumberFormatException ex) {
+                            JOptionPane.showMessageDialog(null, "Error al editar el salario", "Error", JOptionPane.ERROR_MESSAGE);
+                        } catch (ElementoDuplicadoException | ElementoNoEncontradoException ex) {
+                            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    });
+
+                    dialog.add(editPanel, BorderLayout.CENTER);
                     dialog.add(confirmButton, BorderLayout.SOUTH);
-                    dialog.setSize(new Dimension(350, 300));  // Ajustado para los nuevos campos
+                    dialog.setSize(new Dimension(350, 350));  // Ajustado para los nuevos campos
                     dialog.setLocationRelativeTo(null);
                     dialog.setVisible(true);
                 } else {
@@ -219,6 +207,7 @@ public class Empleados {
                 }
             }
         });
+
 
 
 
@@ -280,7 +269,7 @@ public class Empleados {
     }
 
 
-    private void cargarDatosEnTabla() {
+    void cargarDatosEnTabla() {
         // Configurar las columnas de la tabla
         String[] columnas = {"DNI", "Nombre", "Apellido", "Puesto", "Salario", "Horario"};
         modeloTabla = new DefaultTableModel(columnas, 0);
@@ -303,5 +292,6 @@ public class Empleados {
         // Asignar el modelo al JTable
         tabla.setModel(modeloTabla);
     }
+
 
 }

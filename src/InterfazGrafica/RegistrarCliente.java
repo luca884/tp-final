@@ -1,11 +1,11 @@
 package InterfazGrafica;
 
 import Enumeraciones.Carpa;
-import Enumeraciones.Estacionamiento;
 import Enumeraciones.Servicio;
 import Excepciones.ElementoDuplicadoException;
 import Gestores.GestorClientes;
 import Personas.Cliente;
+import Enumeraciones.Estacionamiento;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Locale;
+import java.util.HashMap;
 
 public class RegistrarCliente {
     private JButton atrasButton;
@@ -252,6 +253,25 @@ private Cliente cliente = new Cliente();
                                 usuario[0] = usuarioIngresado;
                                 contrasena[0] = contrasenaIngresada;
 
+                                // crea cliente con los datos ingresados
+                                Cliente cliente = new Cliente();
+                                cliente.setNombre(nombre);
+                                cliente.setApellido(apellido);
+                                cliente.setDni(dni);
+                                cliente.setTelefono(Long.valueOf(telefono));
+                                cliente.setCorreo(correoelectronico);
+                                cliente.setValor_Total(Double.parseDouble(textPrecioTotal.getText()));
+
+                                HashMap<String, Integer> credenciales = new HashMap<>();
+                                credenciales.put(usuario[0], contrasena[0].hashCode());
+                                cliente.setCredenciales(credenciales);
+
+                                // crea gestor
+                                GestorClientes gestor_clientes = new GestorClientes();
+
+                                // agrega cliente a archivo
+                                gestor_clientes.agregarAlArchivo(cliente, "clientes.json", Cliente.class);
+
                                 // Mensaje de éxito
                                 JOptionPane.showMessageDialog(dialogo, "Usuario y contraseña guardados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                                 dialogo.dispose(); // Cierra el diálogo
@@ -347,6 +367,7 @@ private Cliente cliente = new Cliente();
         if (checkBox_Guarderia.isSelected()) {
             precioTotal += 400000;
         }
+
 
         // Actualiza el JTextField con el precio total
         textPrecioTotal.setText(String.format(Locale.US, "%.0f", precioTotal));
