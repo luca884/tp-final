@@ -8,5 +8,7 @@ public class GestorClientes extends Gestor<Cliente> {
         super.cargarDesdeArchivo(nombre_archivo, Cliente.class);
     }
 
-
+    public void agregarAlArchivo(Cliente cliente, String nombre_archivo) {
+        super.agregarAlArchivo(cliente, nombre_archivo, Cliente.class);
+    }
 }
