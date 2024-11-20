@@ -1,5 +1,8 @@
 package InterfazGrafica;
 
+import Enumeraciones.Carpa;
+import Enumeraciones.Estacionamiento;
+import Enumeraciones.Servicio;
 import Excepciones.ElementoDuplicadoException;
 import Gestores.GestorClientes;
 import Personas.Cliente;
@@ -29,6 +32,7 @@ public class RegistrarCliente {
     private JButton registrarButton;
     private JPanel panel;
 private double precioTotal;
+private Cliente cliente = new Cliente();
 
     public RegistrarCliente(){
         atrasButton.addActionListener(new ActionListener() {
@@ -40,6 +44,131 @@ private double precioTotal;
                 frame.dispose();
             }
         });
+
+
+
+
+        // Crear ButtonGroups para las opciones mutuamente excluyentes
+        ButtonGroup carpasGroup = new ButtonGroup();
+        ButtonGroup estacionamientoGroup = new ButtonGroup();
+
+// Asignar los JCheckBox de Carpas al ButtonGroup
+        carpasGroup.add(checkBox_CarpaVIP);
+        carpasGroup.add(checkBox_CarpaStandard);
+
+// Asignar los JCheckBox de Estacionamiento al ButtonGroup
+        estacionamientoGroup.add(checkBox_EstacionamientoTechado);
+        estacionamientoGroup.add(checkBoxEstacionamientoStandard);
+        estacionamientoGroup.add(checkBox_SINestacionamiento);
+
+        checkBox_Spa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarPrecioTotal();
+                // Lógica para definir el servicio cuando se selecciona o deselecciona el Spa
+                if (checkBox_Spa.isSelected()) {
+                    // Si Guardería también está seleccionada, asignar el servicio "GUARDERIA_Y_SPA"
+                    if (checkBox_Guarderia.isSelected()) {
+                        cliente.setServicio(Servicio.GUARDERIA_Y_SPA);
+                    } else {
+                        cliente.setServicio(Servicio.SPA);
+                    }
+                } else {
+                    // Si Guardería está seleccionada pero Spa no, asignar Guardería
+                    if (checkBox_Guarderia.isSelected()) {
+                        cliente.setServicio(Servicio.GUARDERIA);
+                    } else {
+                        cliente.setServicio(null); // Si ninguno está seleccionado, servicio es null
+                    }
+                }
+            }
+        });
+
+        checkBox_Guarderia.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                actualizarPrecioTotal();
+                // Lógica para definir el servicio cuando se selecciona o deselecciona la Guardería
+                if (checkBox_Guarderia.isSelected()) {
+                    // Si Spa también está seleccionado, asignar el servicio "GUARDERIA_Y_SPA"
+                    if (checkBox_Spa.isSelected()) {
+                        cliente.setServicio(Servicio.GUARDERIA_Y_SPA);
+                    } else {
+                        cliente.setServicio(Servicio.GUARDERIA);
+                    }
+                } else {
+                    // Si Spa está seleccionado pero Guardería no, asignar SPA
+                    if (checkBox_Spa.isSelected()) {
+                        cliente.setServicio(Servicio.SPA);
+                    } else {
+                        cliente.setServicio(null); // Si ninguno está seleccionado, servicio es null
+                    }
+                }
+            }
+        });
+
+// Lógica para Carpas
+        checkBox_CarpaVIP.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (checkBox_CarpaVIP.isSelected()) {
+                    checkBox_CarpaStandard.setSelected(false); // Desmarcar la otra opción si se selecciona esta
+                }
+                actualizarPrecioTotal();
+                cliente.setCarpa(checkBox_CarpaVIP.isSelected() ? Carpa.VIP : null);
+            }
+        });
+
+        checkBox_CarpaStandard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (checkBox_CarpaStandard.isSelected()) {
+                    checkBox_CarpaVIP.setSelected(false); // Desmarcar la otra opción si se selecciona esta
+                }
+                actualizarPrecioTotal();
+                cliente.setCarpa(checkBox_CarpaStandard.isSelected() ? Carpa.ESTANDAR : null);
+            }
+        });
+
+// Lógica para Estacionamientos
+        checkBox_EstacionamientoTechado.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (checkBox_EstacionamientoTechado.isSelected()) {
+                    checkBoxEstacionamientoStandard.setSelected(false); // Desmarcar la otra opción si se selecciona esta
+                    checkBox_SINestacionamiento.setSelected(false); // Desmarcar la opción sin estacionamiento
+                }
+                actualizarPrecioTotal();
+                cliente.setEstacionamiento(checkBox_EstacionamientoTechado.isSelected() ? Estacionamiento.VIP : Estacionamiento.NO_INCLUYE);
+            }
+        });
+
+        checkBoxEstacionamientoStandard.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (checkBoxEstacionamientoStandard.isSelected()) {
+                    checkBox_EstacionamientoTechado.setSelected(false); // Desmarcar la otra opción si se selecciona esta
+                    checkBox_SINestacionamiento.setSelected(false); // Desmarcar la opción sin estacionamiento
+                }
+                actualizarPrecioTotal();
+                cliente.setEstacionamiento(checkBoxEstacionamientoStandard.isSelected() ? Estacionamiento.ESTANDAR : Estacionamiento.NO_INCLUYE);
+            }
+        });
+
+        checkBox_SINestacionamiento.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (checkBox_SINestacionamiento.isSelected()) {
+                    checkBox_EstacionamientoTechado.setSelected(false); // Desmarcar la opción con techo si se selecciona esta
+                    checkBoxEstacionamientoStandard.setSelected(false); // Desmarcar la opción estándar si se selecciona esta
+                }
+                actualizarPrecioTotal();
+                cliente.setEstacionamiento(checkBox_SINestacionamiento.isSelected() ? Estacionamiento.NO_INCLUYE : Estacionamiento.NO_INCLUYE);
+            }
+        });
+
+
+
 
         registrarButton.addActionListener(new ActionListener() {
             @Override
@@ -57,13 +186,15 @@ private double precioTotal;
             if(!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !telefono.isEmpty() && !correoelectronico.isEmpty() && !precioTotal.isEmpty()){
 
                 // crea cliente con los datos
-                Cliente cliente = new Cliente();
+
                 cliente.setNombre(nombre);
                 cliente.setApellido(apellido);
                 cliente.setDni(dni);
                 cliente.setTelefono(Long.valueOf(telefono));
                 cliente.setCorreo(correoelectronico);
                 cliente.setValor_Total(Double.parseDouble(textPrecioTotal.getText()));
+
+
 
                 // crea gestor
                 GestorClientes gestor_clientes = new GestorClientes();
@@ -160,56 +291,7 @@ private double precioTotal;
             }
         });
 
-        checkBox_CarpaVIP.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actualizarPrecioTotal();
-            }
-        });
 
-        checkBox_CarpaStandard.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actualizarPrecioTotal();
-            }
-        });
-
-        checkBox_EstacionamientoTechado.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actualizarPrecioTotal();
-            }
-        });
-
-        checkBoxEstacionamientoStandard.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actualizarPrecioTotal();
-            }
-        });
-
-        checkBox_SINestacionamiento.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actualizarPrecioTotal();
-            }
-        });
-
-        checkBox_Spa.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actualizarPrecioTotal();
-
-            }
-        });
-
-        checkBox_Guarderia.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                actualizarPrecioTotal();
-            }
-
-        });
 
 
     }
@@ -218,6 +300,26 @@ private double precioTotal;
     private void actualizarPrecioTotal() {
         precioTotal = 0;  // Reinicia el precio total antes de recalcularlo
 
+        // Verifica que solo una opción de carpa esté seleccionada
+        if (checkBox_CarpaVIP.isSelected() && checkBox_CarpaStandard.isSelected()) {
+            JOptionPane.showMessageDialog(panel, "Solo puede seleccionar una carpa", "Error", JOptionPane.ERROR_MESSAGE);
+            checkBox_CarpaVIP.setSelected(false);
+            checkBox_CarpaStandard.setSelected(false);
+            return; // Sale de la función si hay un error
+        }
+
+        // Verifica que solo una opción de estacionamiento esté seleccionada
+        if ((checkBox_EstacionamientoTechado.isSelected() && checkBoxEstacionamientoStandard.isSelected()) ||
+                (checkBox_EstacionamientoTechado.isSelected() && checkBox_SINestacionamiento.isSelected()) ||
+                (checkBoxEstacionamientoStandard.isSelected() && checkBox_SINestacionamiento.isSelected())) {
+            JOptionPane.showMessageDialog(panel, "Solo puede seleccionar una opción de estacionamiento", "Error", JOptionPane.ERROR_MESSAGE);
+            checkBox_EstacionamientoTechado.setSelected(false);
+            checkBoxEstacionamientoStandard.setSelected(false);
+            checkBox_SINestacionamiento.setSelected(false);
+            return; // Sale de la función si hay un error
+        }
+
+        // Lógica para el cálculo del precio
         if (checkBox_CarpaVIP.isSelected()) {
             precioTotal += 1000000;
         }
@@ -246,12 +348,10 @@ private double precioTotal;
             precioTotal += 400000;
         }
 
-
         // Actualiza el JTextField con el precio total
-        textPrecioTotal.setText(String.format(Locale.US, "%.2f", precioTotal));
-        // textPrecioTotal.setText(String.format(Locale.forLanguageTag("en-US"), "%.2f", precioTotal));
-        // textPrecioTotal.setText(String.format("%.2f", precioTotal));
+        textPrecioTotal.setText(String.format(Locale.US, "%.0f", precioTotal));
     }
+
 
     private void limpiarCampos(){
         textNombre.setText("");
