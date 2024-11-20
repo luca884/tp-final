@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.HashMap;
 import java.util.Locale;
 
 public class RegistrarCliente {
@@ -56,34 +57,6 @@ private double precioTotal;
 
             if(!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !telefono.isEmpty() && !correoelectronico.isEmpty() && !precioTotal.isEmpty()){
 
-                // crea cliente con los datos
-                Cliente cliente = new Cliente();
-                cliente.setNombre(nombre);
-                cliente.setApellido(apellido);
-                cliente.setDni(dni);
-                cliente.setTelefono(Long.valueOf(telefono));
-                cliente.setCorreo(correoelectronico);
-                cliente.setValor_Total(Double.parseDouble(textPrecioTotal.getText()));
-
-                // crea gestor
-                GestorClientes gestor_clientes = new GestorClientes();
-
-                // carga clientes guardados en archivo, si existe el archivo
-                File archivo_clientes = new File("clientes.json");
-                if(archivo_clientes.exists()){
-                    gestor_clientes.cargarDesdeArchivo("clientes.json");
-                }
-
-                try {
-                    // agrega cliente al gestor
-                    gestor_clientes.agregar(cliente);
-
-                    // actualiza archivo
-                    gestor_clientes.guardarEnArchivo("clientes.json");
-
-                } catch (ElementoDuplicadoException ex) {
-                    System.err.println(ex.getMessage());
-                }
                 // Variables para usuario y contraseña
                 final String[] usuario = new String[1];   // Variable para el usuario
                 final String[] contrasena = new String[1]; // Variable para la contraseña
@@ -120,6 +93,25 @@ private double precioTotal;
                             if (!usuarioIngresado.equals(contrasenaIngresada)) {
                                 usuario[0] = usuarioIngresado;
                                 contrasena[0] = contrasenaIngresada;
+
+                                // crea cliente con los datos ingresados
+                                Cliente cliente = new Cliente();
+                                cliente.setNombre(nombre);
+                                cliente.setApellido(apellido);
+                                cliente.setDni(dni);
+                                cliente.setTelefono(Long.valueOf(telefono));
+                                cliente.setCorreo(correoelectronico);
+                                cliente.setValor_Total(Double.parseDouble(textPrecioTotal.getText()));
+
+                                HashMap<String, Integer> credenciales = new HashMap<>();
+                                credenciales.put(usuario[0], contrasena[0].hashCode());
+                                cliente.setCredenciales(credenciales);
+
+                                // crea gestor
+                                GestorClientes gestor_clientes = new GestorClientes();
+
+                                // agrega cliente a archivo
+                                gestor_clientes.agregarAlArchivo(cliente, "clientes.json", Cliente.class);
 
                                 // Mensaje de éxito
                                 JOptionPane.showMessageDialog(dialogo, "Usuario y contraseña guardados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
