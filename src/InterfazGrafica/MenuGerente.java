@@ -1,7 +1,6 @@
 package InterfazGrafica;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -52,9 +51,10 @@ public class MenuGerente {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                Mantenimiento mantenimiento = new Mantenimiento();
-                mantenimiento.setVisible(true);
+                IGMantenimiento IGMantenimiento = new IGMantenimiento();
+                IGMantenimiento.setVisible(true);
                 JFrame frame = (JFrame) SwingUtilities.getRoot(mantenimientoButton);
+                frame.dispose();
                 System.out.println("Botón Mantenimiento presionado");
             }
         });
@@ -64,6 +64,8 @@ public class MenuGerente {
             public void actionPerformed(ActionEvent e) {
                 Utileria utileria = new Utileria();
                 utileria.setVisible(true);
+                JFrame frame = (JFrame) SwingUtilities.getRoot(utileriaButton);
+                frame.dispose();
                 System.out.println("Botón Utilería presionado");
             }
         });
@@ -74,6 +76,8 @@ public class MenuGerente {
             public void actionPerformed(ActionEvent e) {
                 Carpas carpas = new Carpas();
                 carpas.setVisible(true);
+                JFrame frame = (JFrame) SwingUtilities.getRoot(carpasButton);
+                frame.dispose();
                 System.out.println("Botón Carpas presionado");
             }
         });
@@ -83,6 +87,8 @@ public class MenuGerente {
             public void actionPerformed(ActionEvent e) {
                 Estacionamiento estacionamiento = new Estacionamiento();
                 estacionamiento.setVisible(true);
+                JFrame frame = (JFrame) SwingUtilities.getRoot(estacionamientoButton);
+                frame.dispose();
                 System.out.println("Botón Estacionamiento presionado");
             }
         });
@@ -93,6 +99,8 @@ public class MenuGerente {
             public void actionPerformed(ActionEvent e) {
                 Spa spa = new Spa();
                 spa.setVisible(true);
+                JFrame frame = (JFrame) SwingUtilities.getRoot(spaButton);
+                frame.dispose();
                 System.out.println("Botón Spa presionado");
             }
         });
@@ -102,6 +110,8 @@ public class MenuGerente {
             public void actionPerformed(ActionEvent e) {
                 Guarderia guarderia = new Guarderia();
                 guarderia.setVisible(true);
+                JFrame frame = (JFrame) SwingUtilities.getRoot(mantenimientoButton);
+                frame.dispose();
                 System.out.println("Botón Guardería presionado");
             }
         });

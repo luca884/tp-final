@@ -19,6 +19,9 @@ public class Clientes {
     private JPanel panel;
 
     public Clientes(){
+
+        // Llamada inicial para cargar los datos cuando la ventana de clientes se cree
+        cargarDatosEnTabla();
         atrasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -29,8 +32,62 @@ public class Clientes {
             }
         });
 
-        // Llamada inicial para cargar los datos cuando la ventana de clientes se cree
-        cargarDatosEnTabla();
+
+
+        borrarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int filaSeleccionada = TablaClientes.getSelectedRow();  // Obtiene la fila seleccionada
+                if (filaSeleccionada != -1) {
+                    // Obtener el DNI del cliente seleccionado en la tabla
+                    String dni = (String) TablaClientes.getValueAt(filaSeleccionada, 0);  // La primera columna tiene el DNI
+
+                    // Mostrar cuadro de confirmación
+                    int confirmacion = JOptionPane.showConfirmDialog(
+                            null,
+                            "¿Está seguro de que desea eliminar al cliente con DNI: " + dni + "?",
+                            "Confirmación de eliminación",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (confirmacion == JOptionPane.YES_OPTION) {
+                        // Crear el gestor de clientes
+                        GestorClientes gestorClientes = new GestorClientes();
+                        gestorClientes.cargarDesdeArchivo("clientes.json");  // Cargar los datos del archivo
+
+                        // Buscar el cliente con el DNI seleccionado
+                        Cliente clienteAEliminar = null;
+                        for (Cliente cliente : gestorClientes.getLista()) {
+                            if (cliente.getDni().equals(dni)) {
+                                clienteAEliminar = cliente;
+                                break;  // Salir del bucle si se encuentra el cliente
+                            }
+                        }
+
+                        if (clienteAEliminar != null) {
+                            // Eliminar el cliente de la lista
+                            try {
+                                gestorClientes.eliminar(clienteAEliminar);  // Llama a eliminar() desde GestorClientes
+                                // Guardar los cambios en el archivo JSON
+                                gestorClientes.guardarEnArchivo("clientes.json");
+                                // Actualizar la tabla después de eliminar el cliente
+                                cargarDatosEnTabla();  // Recargar los datos actualizados en la tabla
+                                JOptionPane.showMessageDialog(null, "Cliente eliminado exitosamente.");
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(null, "Error al eliminar el cliente: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Cliente no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Operación cancelada. El cliente no fue eliminado.", "Cancelado", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Seleccione una fila para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
 
 
     }

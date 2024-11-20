@@ -1,7 +1,6 @@
 package InterfazGrafica;
 import Enumeraciones.Puesto;
 import Excepciones.ElementoDuplicadoException;
-import Gestores.GestorClientes;
 import Gestores.GestorEmpleados;
 import Personas.Empleado;
 
@@ -9,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 public class RegistrarEmpleado {
     private JPanel panel1;
@@ -20,45 +20,54 @@ public class RegistrarEmpleado {
     private JTextField textPuesto;
     private JButton confirmarButton;
     private JButton atrasButton;
+    private JCheckBox checkBoxAdmin;
+    private JCheckBox checkBoxMantenimiento;
+    private JCheckBox checkBoxServicio;
 
+    private DefaultTableModel modeloTabla;
 
     public RegistrarEmpleado() {
-    //Menu boton
-        atrasButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Empleados empleados = new Empleados();
-                empleados.setVisible(true);
-                JFrame frame = (JFrame) SwingUtilities.getRoot(atrasButton);
-                frame.dispose();
-            }
-        });
-
-
 
         confirmarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    String nombre, apellido, dni, horario;
-                    Puesto puesto;
-                    double salario;
+                    String nombre, apellido, dni, horario, salario;
+                    Puesto puesto = null;
+
+
 
                     nombre = textNombre.getText();
                     apellido = textApellido.getText();
                     dni = textDni.getText();
                     horario = textHorario.getText();
-                    puesto = Puesto.valueOf(textPuesto.getText());
-                    salario = Double.parseDouble(textSalario.getText());
+                    salario =textSalario.getText();
 
-                    if (!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !horario.isEmpty() && salario <= 0){
+                    if (checkBoxAdmin.isSelected()){
+                        puesto = Puesto.ADMINISTRADOR;
+                    }
+                    if (checkBoxMantenimiento.isSelected()){
+                        puesto = Puesto.MANTENIMIENTO;
+                    }
+                    if (checkBoxServicio.isSelected()){
+                        puesto = Puesto.SERVICIO_AL_CLIENTE;
+                    }
+
+                if (puesto == null) {
+                    JOptionPane.showMessageDialog(panel1, "Debe seleccionar un puesto.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;  // Detener la ejecución si no se seleccionó un puesto
+                }
+
+
+
+                    if (!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !horario.isEmpty() && !salario.isEmpty()){
 
                         Empleado empleado = new Empleado();
                         empleado.setNombre(nombre);
                         empleado.setApellido(apellido);
                         empleado.setDni(dni);
                         empleado.setHorario(horario);
-                        empleado.setSalario(salario);
-                        empleado.setPuesto(Puesto.ADMINISTRADOR);               ///CAMBIARRRRRRRRRRRRRRRR
+                        empleado.setSalario(Double.valueOf(salario));
+                        empleado.setPuesto(puesto);
 
                         // crea gestor
                         GestorEmpleados gestorEmpleados = new GestorEmpleados();
@@ -84,7 +93,7 @@ public class RegistrarEmpleado {
 
                         Empleados empleados = new Empleados();
                         empleados.setVisible(true);
-                        JFrame frame = (JFrame) SwingUtilities.getRoot(atrasButton);
+                        JFrame frame = (JFrame) SwingUtilities.getRoot(confirmarButton);
                         frame.dispose();
 
 
@@ -99,6 +108,18 @@ public class RegistrarEmpleado {
             }
         });
 
+
+        //Menu boton
+        atrasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Empleados empleados = new Empleados();
+                empleados.setVisible(true);
+                JFrame frame = (JFrame) SwingUtilities.getRoot(atrasButton);
+                frame.dispose();
+            }
+        });
+
     }
 
         public void limpiar(){
@@ -106,7 +127,6 @@ public class RegistrarEmpleado {
             textApellido.setText("");
             textDni.setText("");
             textHorario.setText("");
-            textPuesto.setText("");
             textSalario.setText("");
         }
 

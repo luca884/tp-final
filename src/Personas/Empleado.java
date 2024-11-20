@@ -12,11 +12,11 @@ public class Empleado extends Persona {
 
 
     /* constructor */
-    public Empleado(String nombre, String apellido, String dni, String horario, String puesto, double salario) {
+    public Empleado(String nombre, String apellido, String dni, String horario, Puesto puesto, double salario) {
         super(nombre, apellido, dni);
         this.salario = salario;
         this.horario = horario;
-        this.puesto = Puesto.valueOf(puesto);
+        this.puesto = puesto;
         this.nivelPermisos = NivelPermisos.EMPLEADO;
     }
 

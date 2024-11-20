@@ -3,6 +3,7 @@ package Gestores;
 import Excepciones.ElementoDuplicadoException;
 import Excepciones.ElementoNoEncontradoException;
 import Json.LocalDateAdapter;
+import Personas.Empleado;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -18,6 +19,8 @@ public abstract class Gestor<T> {
     protected HashSet<T> lista = new HashSet<>();
     private Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
 
+
+
     /* constructores */
     public Gestor() {
     }
@@ -25,6 +28,7 @@ public abstract class Gestor<T> {
     public Gestor(HashSet<T> lista) {
         this.lista = lista;
     }
+
 
     /* metodos */
     public void agregar(T item) throws ElementoDuplicadoException {
