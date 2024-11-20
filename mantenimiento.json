@@ -1,8 +1,26 @@
 [
   {
+    "dni": "44",
+    "descripcion": "gwregwe",
+    "costo": 4334.0,
+    "estado": "okey"
+  },
+  {
+    "dni": "99",
+    "descripcion": "ppaappaaaaaaa",
+    "costo": 156.0,
+    "estado": "meee"
+  },
+  {
+    "dni": "1",
+    "descripcion": "das",
+    "costo": 232.0,
+    "estado": "dfew"
+  },
+  {
     "dni": "5",
-    "descripcion": "se rompo un ceramico de la pileta num 3",
-    "costo": 10.0,
-    "estado": "buena"
+    "descripcion": "se rompieron 5 ceramicos de la pileta num 10",
+    "costo": 100000.0,
+    "estado": "preocupante "
   }
 ]

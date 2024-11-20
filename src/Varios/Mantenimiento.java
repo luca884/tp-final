@@ -13,6 +13,10 @@ public class Mantenimiento {
         this.estado = estado;
     }
 
+    public Mantenimiento() {
+
+    }
+
     // Getters y Setters
     public String getDni() {
         return dni;
