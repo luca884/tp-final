@@ -97,10 +97,16 @@ public abstract class Gestor<T> {
     }
 
     public void agregarAlArchivo(T item, String nombre_archivo, Class<T> clazz) {
+        Type type = TypeToken.getParameterized(HashSet.class, clazz).getType();
+        agregarAlArchivo(item, nombre_archivo, type);
+    }
+
+    public void agregarAlArchivo(T item, String nombre_archivo, Type type) {
         // carga clientes guardados en archivo, si existe el archivo
         File archivo = new File(nombre_archivo);
         if (archivo.exists()) {
-            cargarDesdeArchivo(nombre_archivo, clazz);
+            cargarDesdeArchivo(nombre_archivo, type);
+            // cargarDesdeArchivo(nombre_archivo, clazz);
         }
 
         try {
