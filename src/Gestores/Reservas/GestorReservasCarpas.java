@@ -6,6 +6,7 @@ import Gestores.Gestor;
 import Personas.Cliente;
 import Reservas.Reserva;
 import Servicios.Carpa;
+import Servicios.Estacionamiento;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
@@ -35,6 +36,11 @@ public class GestorReservasCarpas extends Gestor<Reserva<Carpa>> {
     public void cargarDesdeArchivo(String nombre_archivo) {
         Type type = TypeToken.getParameterized(HashSet.class, TypeToken.getParameterized(Reserva.class, Carpa.class).getType()).getType();
         super.cargarDesdeArchivo(nombre_archivo, type);
+    }
+
+    public void agregarAlArchivo(Reserva<Carpa> carpa, String nombre_archivo) {
+        Type type = TypeToken.getParameterized(HashSet.class, TypeToken.getParameterized(Reserva.class, Carpa.class).getType()).getType();
+        super.agregarAlArchivo(carpa, nombre_archivo, type);
     }
 
     // TODO: averiguar qué carajo pasa con el tercer argumento
