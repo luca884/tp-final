@@ -19,7 +19,7 @@ public class IniciarSesion {
     private JButton cerrarButton;
 
 
-    public IniciarSesion (){
+    public IniciarSesion() {
         //Cerrar el programa
         cerrarButton.addActionListener(new ActionListener() {
             @Override
@@ -41,6 +41,7 @@ public class IniciarSesion {
             }
         });
 
+
         iniciarSesionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -57,9 +58,9 @@ public class IniciarSesion {
                 // busca cliente con nombre de usuario igual al ingresado
                 Cliente cliente = gestor_clientes.buscarPorUsuario(usuario_ingresado);
 
-                // si encuentra al cliente
+                // Si encuentra al cliente
                 if (cliente != null) {
-                    // comprueba si las credenciales ingresadas son correctas
+                    // Comprueba si las credenciales ingresadas son correctas
                     if (cliente.comprobarCredenciales(usuario_ingresado, contraseña_ingresada)) {
                         MenuUsuario menuUsuario = new MenuUsuario(cliente);
                         menuUsuario.setVisible(true);
@@ -67,39 +68,46 @@ public class IniciarSesion {
                         frame.dispose();
 
                         System.out.println("ENCONTRO CLIENTE");
+                        JOptionPane.showMessageDialog(null, "ENCONTRO CLIENTE");
                     }
-                }else {
+                } else {
                     System.out.println("NO ENCONTRÓ CLIENTE");
+                    JOptionPane.showMessageDialog(null, "NO ENCONTRÓ CLIENTE");
                 }
 
-                // si no encontro cliente buscar empleado
+// Si no encontró cliente, buscar empleado
                 if (cliente == null) {
-                    // busca empleado con nombre de usuario igual al ingresado
+                    // Busca empleado con nombre de usuario igual al ingresado
                     Empleado empleado = gestor_empleados.buscarPorUsuario(usuario_ingresado);
 
-                    // si encuentra al empleado
+                    // Si encuentra al empleado
                     if (empleado != null) {
-                        // comprueba si las credenciales ingresadas son correctas
+                        // Comprueba si las credenciales ingresadas son correctas
                         if (empleado.comprobarCredenciales(usuario_ingresado, contraseña_ingresada)) {
-                            // empleado ingresado con exito
+                            // Empleado ingresado con éxito
                             if (empleado.getPuesto() == Puesto.ADMINISTRADOR) {
-                                // menu administrador
+                                // Menú administrador
                                 MenuGerente menuGerente = new MenuGerente();
                                 menuGerente.setVisible(true);
                                 JFrame frame = (JFrame) SwingUtilities.getRoot(iniciarSesionButton);
                                 frame.dispose();
+
                                 System.out.println("ENCONTRO ADMINISTRADOR");
+                                JOptionPane.showMessageDialog(null, "ENCONTRO ADMINISTRADOR");
                             } else {
-                                // menu demas empleados
+                                // Menú demás empleados
                                 MenuEmpleado menuEmpleado = new MenuEmpleado(empleado);
                                 menuEmpleado.setVisible(true);
                                 JFrame frame = (JFrame) SwingUtilities.getRoot(iniciarSesionButton);
                                 frame.dispose();
+
                                 System.out.println("ENCONTRO EMPLEADO");
+                                JOptionPane.showMessageDialog(null, "ENCONTRO EMPLEADO");
                             }
                         }
                     }
                 }
+
             }
         });
 
