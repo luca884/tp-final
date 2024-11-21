@@ -243,16 +243,7 @@ public class RegistrarCliente {
                                 // agrega cliente a archivo
                                 gestor_clientes.agregarAlArchivo(cliente, "clientes.json");
 
-                                /*
                                 // RESERVAR CARPA
-
-                                // Después de múltiples intentos, me doy por vencido al tratar de parsear
-                                // correctamente las carpas, estacionamientos y servicios.
-                                // Si alguno de ustedes logra implementarlo bien, le voy a dar 10000 pesos
-                                // en vivo y en directo por lograr semejante hazaña más allá de mi
-                                // habilidades actuales (tengo severas deficiencias cognitivas, lo sé).
-                                //                                                                   - Eze
-
                                 // crea los gestores
                                 GestorReservasCarpas gestor_reservas_carpas = new GestorReservasCarpas();
                                 GestorCarpas gestor_carpas = new GestorCarpas();
@@ -268,28 +259,25 @@ public class RegistrarCliente {
                                     carpa = gestor_carpas.buscarReservablePorTipo(Carpa.ESTANDAR);
                                 }
 
-                                //TODO: Resolver tercer argumento
                                 if(carpa != null){
                                     // reserva la carpa
-                                    //gestor_reservas_carpas.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json", );
+                                    gestor_reservas_carpas.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json");
 
-                                    // cuando se reserva una carpa cambia su estado a OCUPADO
-                                    // por eso hay que actualizar el archivo
+                                    /* cuando se reserva una carpa cambia su estado a OCUPADO */
+                                    /* por eso hay que actualizar el archivo */
                                     gestor_carpas.guardarEnArchivo("carpas.json");
-                                }else{
-                                    // else: el tipo de carpa seleccionado no está disponible
-
                                 }
+                                // else: el tipo de carpa seleccionado no esta disponible
 
                                 // RESERVAR ESTACIONAMIENTO
                                 // crea los gestores
                                 GestorReservasEstacionamiento gestor_reservas_estacionamiento = new GestorReservasEstacionamiento();
                                 GestorEstacionamientos gestor_estacionamiento = new GestorEstacionamientos();
 
-                                // carga los estacionamientos guardados en archivo
+                                // carga los estacionamiento guardados en archivo
                                 gestor_estacionamiento.cargarDesdeArchivo("estacionamientos.json");
 
-                                // selecciona un estacionamiento del tipo elegido entre las carpas reservables
+                                // selecciona un estacionamiento del tipo elegido entre los estacionamientos reservables
                                 Servicios.Estacionamiento estacionamiento = null;
                                 if(checkBox_EstacionamientoTechado.isSelected()){
                                     estacionamiento = gestor_estacionamiento.buscarReservablePorTipo(Estacionamiento.VIP);
@@ -297,18 +285,16 @@ public class RegistrarCliente {
                                     estacionamiento = gestor_estacionamiento.buscarReservablePorTipo(Estacionamiento.ESTANDAR);
                                 }
 
-                                //TODO: Resolver tercer argumento
                                 if(estacionamiento != null){
                                     // reserva estacionamiento
-                                    // gestor_reservas_estacionamiento.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json" );
+                                    gestor_reservas_estacionamiento.agregarAlArchivo(estacionamiento.reservar(cliente), "reservas-estacionamiento.json");
 
-                                    // cuando se reserva un estacionamiento cambia su estado a OCUPADO
-                                    // por eso hay que actualizar el archivo
+                                    /* cuando se reserva un estacionamiento cambia su estado a OCUPADO */
+                                    /* por eso hay que actualizar el archivo */
                                     gestor_estacionamiento.guardarEnArchivo("estacionamientos.json");
                                 }
-                                // else: el tipo de estacionamiento seleccionado no está disponible
+                                // else: el tipo de estacionamiento seleccionado no esta disponible
 
-                                */
                                 // Mensaje de éxito
                                 JOptionPane.showMessageDialog(dialogo, "Usuario y contraseña guardados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                                 dialogo.dispose(); // Cierra el diálogo
