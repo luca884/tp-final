@@ -45,7 +45,7 @@ public class Estacionamiento {
 
         // Configurar las columnas de la tabla
         // Inicia con las columnas básicas
-        List<String> columnas = new ArrayList<>(Arrays.asList("Estacionamiento", "DNI" , "Nombre", "Apellido", "Teléfono", "Correo Electrónico"));
+        List<String> columnas = new ArrayList<>(Arrays.asList("Numero ","DNI" , "Nombre", "Apellido", "Teléfono", "Correo Electrónico"));
 
         // Convertir la lista de columnas en un arreglo para el DefaultTableModel
         String[] columnasArray = columnas.toArray(new String[0]);
@@ -57,7 +57,7 @@ public class Estacionamiento {
         // Agregar filas con los datos de los clientes
         for (Cliente cliente : listaClientes) {
             List<Object> row = new ArrayList<>();
-            row.add(cliente.getEstacionamiento());
+            row.add(cliente.conseguirNumeroEstacionamiento());
             row.add(cliente.getDni());
             row.add(cliente.getNombre());
             row.add(cliente.getApellido());
@@ -67,7 +67,6 @@ public class Estacionamiento {
         }
 
         tablaEstacionamiento.setModel(modelo);
-
     }
 
 

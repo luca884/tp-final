@@ -17,8 +17,7 @@ public class Carpas {
     private JPanel panel;
 
 
-
-    public Carpas (){
+    public Carpas() {
         cargarDatosTablaCarpas();
 
 
@@ -31,9 +30,6 @@ public class Carpas {
                 frame.dispose();
             }
         });
-
-
-
 
 
     }
@@ -50,9 +46,10 @@ public class Carpas {
         // Obtener la lista de clientes desde el gestor
         java.util.List<Cliente> listaClientes = gestorClientes.getLista().stream().toList();
 
+
         // Configurar las columnas de la tabla
         // Inicia con las columnas básicas
-        List<String> columnas = new ArrayList<>(Arrays.asList("Carpas", "DNI" , "Nombre", "Apellido", "Teléfono", "Correo Electrónico"));
+        List<String> columnas = new ArrayList<>(Arrays.asList("Carpa numero", "DNI", "Nombre", "Apellido", "Teléfono", "Correo Electrónico"));
 
         // Convertir la lista de columnas en un arreglo para el DefaultTableModel
         String[] columnasArray = columnas.toArray(new String[0]);
@@ -64,7 +61,7 @@ public class Carpas {
         // Agregar filas con los datos de los clientes
         for (Cliente cliente : listaClientes) {
             List<Object> row = new ArrayList<>();
-            row.add(cliente.getCarpa());
+            row.add(cliente.conseguirNumeroCarpa());
             row.add(cliente.getDni());
             row.add(cliente.getNombre());
             row.add(cliente.getApellido());
@@ -74,10 +71,9 @@ public class Carpas {
         }
 
         tablaCarpas.setModel(modelo);
-
     }
 
-    public void setVisible(boolean visible){
+    public void setVisible(boolean visible) {
         JFrame frame = new JFrame("Carpas");
         frame.setContentPane(panel); //Asigna el contenido a la ventana
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cierra la ventana, pero no para el programa
