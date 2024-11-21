@@ -1,32 +1,31 @@
 package Servicios;
 
-import Interfaces.Reservable;
+import Enumeraciones.Estado;
 
-public class Estacionamiento extends Servicio implements Reservable {
+public class Estacionamiento  extends Servicio {
     /* atributos */
     static private Integer capacidad = 70;
     static private Integer lugares_disponibles = capacidad;
-    private Enumeraciones.Estacionamiento tipoEstacionamiento;
+    private Enumeraciones.Estacionamiento tipo_de_estacionamiento ;
 
     /* constructores */
-    public Estacionamiento() {
+    public Estacionamiento(Enumeraciones.Estacionamiento tipo_de_estacionamiento) {
         super();
-    }
-    public Estacionamiento(double precio) {
-        super(precio);
-    }
-
-    public Enumeraciones.Estacionamiento getTipoEstacionamiento() {
-        return tipoEstacionamiento;
-    }
-
-    public void setTipoEstacionamiento(Enumeraciones.Estacionamiento tipoEstacionamiento) {
-        this.tipoEstacionamiento = tipoEstacionamiento;
+        this.tipo_de_estacionamiento = tipo_de_estacionamiento;
+        this.setPrecio(calcularPrecio());
     }
 
     /* metodos */
-    public boolean esReservable(){
-        return Estacionamiento.lugares_disponibles > 0;
+    public Boolean esReservable(){
+        return Estacionamiento.lugares_disponibles > 0 && getEstado() == Estado.DISPONIBLE;
+    }
+
+    public Double calcularPrecio(){
+        return switch (tipo_de_estacionamiento) {
+            case Enumeraciones.Estacionamiento.VIP -> 500000.0;
+            case Enumeraciones.Estacionamiento.ESTANDAR -> 750000.0;
+            case Enumeraciones.Estacionamiento.NO_INCLUYE -> null;
+        };
     }
 
     public static void cambiarLugaresDispoibles(Integer numero){
@@ -48,5 +47,13 @@ public class Estacionamiento extends Servicio implements Reservable {
 
     public static void setLugares_disponibles(Integer lugares_disponibles) {
         Estacionamiento.lugares_disponibles = lugares_disponibles;
+    }
+
+    public Enumeraciones.Estacionamiento getTipo_de_estacionamiento() {
+        return tipo_de_estacionamiento;
+    }
+
+    public void setTipo_de_estacionamiento(Enumeraciones.Estacionamiento tipo_de_estacionamiento) {
+        this.tipo_de_estacionamiento = tipo_de_estacionamiento;
     }
 }
