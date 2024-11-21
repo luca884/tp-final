@@ -91,11 +91,14 @@ public class MenuEmpleado {
                         );
 
                         // Actualizar el empleado en la lista
-                        gestorEmpleados.eliminar(empleado);
                         gestorEmpleados.agregar(empleadoEditado);
+
+                        gestorEmpleados.eliminar(empleado);
+                        cargarDatosEnTabla(empleadoEditado);
 
                         // Guardar los cambios en el archivo JSON
                         gestorEmpleados.guardarEnArchivo("empleados.json");
+
 
                         // Actualizar la tabla
                         modeloTabla.setValueAt(nuevoNombre, 0, 1);

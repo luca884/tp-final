@@ -1,22 +1,15 @@
 package InterfazGrafica;
 
 import Enumeraciones.Carpa;
-import Enumeraciones.Estado;
 import Enumeraciones.Servicio;
-import Excepciones.ElementoDuplicadoException;
-import Gestores.GestorCarpas;
 import Gestores.GestorClientes;
-import Gestores.GestorEstacionamientos;
-import Gestores.Reservas.GestorReservasCarpas;
-import Gestores.Reservas.GestorReservasEstacionamiento;
 import Personas.Cliente;
 import Enumeraciones.Estacionamiento;
-import Reservas.Reserva;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.Locale;
 import java.util.HashMap;
 
@@ -177,73 +170,84 @@ public class RegistrarCliente {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-            String nombre, apellido, dni, telefono, correoelectronico, precioTotal;
+                String nombre, apellido, dni, telefono, correoelectronico, precioTotal;
 
-            nombre = textNombre.getText();
-            apellido = textApellido.getText();
-            dni = textDni.getText();
-            telefono = textTelefono.getText();
-            correoelectronico = textCorreoelectronico.getText();
-            precioTotal = textPrecioTotal.getText();
+                nombre = textNombre.getText();
+                apellido = textApellido.getText();
+                dni = textDni.getText();
+                telefono = textTelefono.getText();
+                correoelectronico = textCorreoelectronico.getText();
+                precioTotal = textPrecioTotal.getText();
 
-            if(!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !telefono.isEmpty() && !correoelectronico.isEmpty() && !precioTotal.isEmpty()){
-                // Variables para usuario y contraseña
-                final String[] usuario = new String[1];   // Variable para el usuario
-                final String[] contrasena = new String[1]; // Variable para la contraseña
+                if(!nombre.isEmpty() && !apellido.isEmpty() && !dni.isEmpty() && !telefono.isEmpty() && !correoelectronico.isEmpty() && !precioTotal.isEmpty()){
+                    // Variables para usuario y contraseña
+                    final String[] usuario = new String[1];   // Variable para el usuario
+                    final String[] contrasena = new String[1]; // Variable para la contraseña
 
-                // Crear el diálogo
-                JDialog dialogo = new JDialog((JFrame) null, "Usuario y contraseña", true);
-                dialogo.setLayout(new BorderLayout());
-                JPanel editPanel = new JPanel(new GridLayout(6, 4));
+                    // Crear el diálogo
+                    JDialog dialogo = new JDialog((JFrame) null, "Usuario y contraseña", true);
+                    dialogo.setLayout(new BorderLayout());
+                    JPanel editPanel = new JPanel(new GridLayout(6, 4));
 
-                // Campo para el usuario
-                JTextField editUsuarioField = new JTextField();
-                editPanel.add(new JLabel("Usuario:"));
-                editPanel.add(editUsuarioField);
+                    // Campo para el usuario
+                    JTextField editUsuarioField = new JTextField();
+                    editPanel.add(new JLabel("Usuario:"));
+                    editPanel.add(editUsuarioField);
 
-                // Campo para la contraseña
-                JPasswordField editContrasenaField = new JPasswordField();
-                editPanel.add(new JLabel("Contraseña:"));
-                editPanel.add(editContrasenaField);
+                    // Campo para la contraseña
+                    JPasswordField editContrasenaField = new JPasswordField();
+                    editPanel.add(new JLabel("Contraseña:"));
+                    editPanel.add(editContrasenaField);
 
-                // Botón para confirmar
-                JButton confirmButton = new JButton("Confirmar");
+                    // Botón para confirmar
+                    JButton confirmButton = new JButton("Confirmar");
 
-                // Acción al presionar el botón
-                confirmButton.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        // Captura los valores ingresados
-                        String usuarioIngresado = editUsuarioField.getText().trim();
-                        String contrasenaIngresada = new String(editContrasenaField.getPassword());
+                    // Acción al presionar el botón
+                    confirmButton.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            // Captura los valores ingresados
+                            String usuarioIngresado = editUsuarioField.getText().trim();
+                            String contrasenaIngresada = new String(editContrasenaField.getPassword());
 
-                        // Verificar que ambos campos estén completos
-                        if (!usuarioIngresado.isEmpty() && !contrasenaIngresada.isEmpty()) {
-                            // Verificar que el usuario y la contraseña sean distintos
-                            if (!usuarioIngresado.equals(contrasenaIngresada)) {
-                                usuario[0] = usuarioIngresado;
-                                contrasena[0] = contrasenaIngresada;
+                            // Verificar que ambos campos estén completos
+                            if (!usuarioIngresado.isEmpty() && !contrasenaIngresada.isEmpty()) {
+                                // Verificar que el usuario y la contraseña sean distintos
+                                if (!usuarioIngresado.equals(contrasenaIngresada)) {
+                                    usuario[0] = usuarioIngresado;
+                                    contrasena[0] = contrasenaIngresada;
+                                    actualizarPrecioTotal();
+                                    // crea cliente con los datos ingresados
 
-                                // crea cliente con los datos ingresados
-                                Cliente cliente = new Cliente();
-                                cliente.setNombre(nombre);
-                                cliente.setApellido(apellido);
-                                cliente.setDni(dni);
-                                cliente.setTelefono(Long.valueOf(telefono));
-                                cliente.setCorreo(correoelectronico);
-                                cliente.setValor_Total(Double.parseDouble(textPrecioTotal.getText()));
+                                    cliente.setNombre(nombre);
+                                    cliente.setApellido(apellido);
+                                    cliente.setDni(dni);
+                                    cliente.setTelefono(Long.valueOf(telefono));
 
-                                HashMap<String, Integer> credenciales = new HashMap<>();
-                                credenciales.put(usuario[0], contrasena[0].hashCode());
-                                cliente.setCredenciales(credenciales);
+                                    cliente.setCorreo(correoelectronico);
 
-                                // crea gestor
-                                GestorClientes gestor_clientes = new GestorClientes();
+                                    cliente.setValor_Total(Double.parseDouble(textPrecioTotal.getText()));
 
-                                // agrega cliente a archivo
-                                gestor_clientes.agregarAlArchivo(cliente, "clientes.json");
+                                    HashMap<String, Integer> credenciales = new HashMap<>();
+                                    credenciales.put(usuario[0], contrasena[0].hashCode());
+                                    cliente.setCredenciales(credenciales);
 
+                                    // crea gestor
+                                    GestorClientes gestor_clientes = new GestorClientes();
+                                    gestor_clientes.cargarDesdeArchivo("clientes.json");
+
+                                    // agrega cliente a archivo
+                                    gestor_clientes.agregarAlArchivo(cliente, "clientes.json");
+
+                                /*
                                 // RESERVAR CARPA
+
+                                // Después de múltiples intentos, me doy por vencido al tratar de parsear
+                                // correctamente las carpas, estacionamientos y servicios.
+                                // Si alguno de ustedes logra implementarlo bien, le voy a dar 10000 pesos
+                                // en vivo y en directo por lograr semejante hazaña más allá de mi
+                                // habilidades actuales (tengo severas deficiencias cognitivas, lo sé).
+                                //                                                                   - Eze
 
                                 // crea los gestores
                                 GestorReservasCarpas gestor_reservas_carpas = new GestorReservasCarpas();
@@ -265,8 +269,8 @@ public class RegistrarCliente {
                                     // reserva la carpa
                                     //gestor_reservas_carpas.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json", );
 
-                                    /* cuando se reserva una carpa cambia su estado a OCUPADO */
-                                    /* por eso hay que actualizar el archivo */
+                                    // cuando se reserva una carpa cambia su estado a OCUPADO
+                                    // por eso hay que actualizar el archivo
                                     gestor_carpas.guardarEnArchivo("carpas.json");
                                 }else{
                                     // else: el tipo de carpa seleccionado no está disponible
@@ -292,53 +296,54 @@ public class RegistrarCliente {
                                 //TODO: Resolver tercer argumento
                                 if(estacionamiento != null){
                                     // reserva estacionamiento
-                                    //gestor_reservas_estacionamiento.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json" );
+                                    // gestor_reservas_estacionamiento.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json" );
 
-                                    /* cuando se reserva un estacionamiento cambia su estado a OCUPADO
-                                     por eso hay que actualizar el archivo */
+                                    // cuando se reserva un estacionamiento cambia su estado a OCUPADO
+                                    // por eso hay que actualizar el archivo
                                     gestor_estacionamiento.guardarEnArchivo("estacionamientos.json");
                                 }
                                 // else: el tipo de estacionamiento seleccionado no está disponible
 
-                                // Mensaje de éxito
-                                JOptionPane.showMessageDialog(dialogo, "Usuario y contraseña guardados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                                dialogo.dispose(); // Cierra el diálogo
+                                */
+                                    // Mensaje de éxito
+                                    JOptionPane.showMessageDialog(dialogo, "Usuario y contraseña guardados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                                    dialogo.dispose(); // Cierra el diálogo
+                                } else {
+                                    // Mensaje de error si son iguales
+                                    JOptionPane.showMessageDialog(dialogo, "El usuario y la contraseña deben ser distintos.", "Error", JOptionPane.ERROR_MESSAGE);
+                                }
                             } else {
-                                // Mensaje de error si son iguales
-                                JOptionPane.showMessageDialog(dialogo, "El usuario y la contraseña deben ser distintos.", "Error", JOptionPane.ERROR_MESSAGE);
+                                // Mensaje de error si faltan campos
+                                JOptionPane.showMessageDialog(dialogo, "Debe completar ambos campos.", "Error", JOptionPane.ERROR_MESSAGE);
                             }
-                        } else {
-                            // Mensaje de error si faltan campos
-                            JOptionPane.showMessageDialog(dialogo, "Debe completar ambos campos.", "Error", JOptionPane.ERROR_MESSAGE);
                         }
-                    }
-                });
+                    });
 
-                // Agregar componentes al diálogo
-                dialogo.add(editPanel, BorderLayout.CENTER);
-                dialogo.add(confirmButton, BorderLayout.SOUTH);
-                dialogo.setSize(new Dimension(300, 220));
-                dialogo.setLocationRelativeTo(null);
-                dialogo.setVisible(true);
+                    // Agregar componentes al diálogo
+                    dialogo.add(editPanel, BorderLayout.CENTER);
+                    dialogo.add(confirmButton, BorderLayout.SOUTH);
+                    dialogo.setSize(new Dimension(300, 220));
+                    dialogo.setLocationRelativeTo(null);
+                    dialogo.setVisible(true);
 
-                limpiarCampos();
-                JOptionPane.showMessageDialog(panel, "Cliente registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    limpiarCampos();
+                    JOptionPane.showMessageDialog(panel, "Cliente registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-                IniciarSesion iniciarSesion = new IniciarSesion();
-                iniciarSesion.setVisible(true);
-                JFrame frame = (JFrame) SwingUtilities.getRoot(registrarButton);
-                frame.dispose();
+                    IniciarSesion iniciarSesion = new IniciarSesion();
+                    iniciarSesion.setVisible(true);
+                    JFrame frame = (JFrame) SwingUtilities.getRoot(registrarButton);
+                    frame.dispose();
 
-            }else {
-                JOptionPane.showMessageDialog(panel, "Error al registrar sus datos. Campos vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
+                }else {
+                    JOptionPane.showMessageDialog(panel, "Error al registrar sus datos. Campos vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
 
-            }
+                }
             }
         });
     }
 
 
-    private void actualizarPrecioTotal() {
+    private double actualizarPrecioTotal() {
         precioTotal = 0;  // Reinicia el precio total antes de recalcularlo
 
         // Verifica que solo una opción de carpa esté seleccionada
@@ -346,7 +351,7 @@ public class RegistrarCliente {
             JOptionPane.showMessageDialog(panel, "Solo puede seleccionar una carpa", "Error", JOptionPane.ERROR_MESSAGE);
             checkBox_CarpaVIP.setSelected(false);
             checkBox_CarpaStandard.setSelected(false);
-            return; // Sale de la función si hay un error
+            return 0;
         }
 
         // Verifica que solo una opción de estacionamiento esté seleccionada
@@ -357,41 +362,51 @@ public class RegistrarCliente {
             checkBox_EstacionamientoTechado.setSelected(false);
             checkBoxEstacionamientoStandard.setSelected(false);
             checkBox_SINestacionamiento.setSelected(false);
-            return; // Sale de la función si hay un error
+
         }
 
         // Lógica para el cálculo del precio
         if (checkBox_CarpaVIP.isSelected()) {
             precioTotal += 1000000;
+            cliente.setCarpa(Carpa.VIP);
         }
 
         if (checkBox_CarpaStandard.isSelected()) {
             precioTotal += 750000;
+            cliente.setCarpa(Carpa.ESTANDAR);
         }
 
         if (checkBox_EstacionamientoTechado.isSelected()) {
             precioTotal += 500000;
+            cliente.setEstacionamiento(Estacionamiento.VIP);
         }
 
         if (checkBoxEstacionamientoStandard.isSelected()) {
             precioTotal += 250000;
+            cliente.setEstacionamiento(Estacionamiento.ESTANDAR);
         }
 
         if (checkBox_SINestacionamiento.isSelected()) {
             precioTotal += 0;
+            cliente.setEstacionamiento(Estacionamiento.NO_INCLUYE);
         }
 
-        if (checkBox_Spa.isSelected()) {
-            precioTotal += 300000;
-        }
-
-        if (checkBox_Guarderia.isSelected()) {
+        if (checkBox_Guarderia.isSelected() && checkBox_Spa.isSelected()) {
+            cliente.setServicio(Servicio.GUARDERIA_Y_SPA);
+            precioTotal += 700000;
+        }else if (checkBox_Guarderia.isSelected()) {
             precioTotal += 400000;
+            cliente.setServicio(Servicio.GUARDERIA);
+        } else if (checkBox_Spa.isSelected()) {
+            precioTotal += 300000;
+            cliente.setServicio(Servicio.SPA);
+
         }
 
 
         // Actualiza el JTextField con el precio total
         textPrecioTotal.setText(String.format(Locale.US, "%.0f", precioTotal));
+        return precioTotal;
     }
 
 
