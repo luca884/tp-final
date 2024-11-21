@@ -260,9 +260,10 @@ public class RegistrarCliente {
                                     carpa = gestor_carpas.buscarReservablePorTipo(Carpa.ESTANDAR);
                                 }
 
+                                //TODO: Resolver tercer argumento
                                 if(carpa != null){
                                     // reserva la carpa
-                                    gestor_reservas_carpas.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json");
+                                    //gestor_reservas_carpas.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json", );
 
                                     /* cuando se reserva una carpa cambia su estado a OCUPADO */
                                     /* por eso hay que actualizar el archivo */
@@ -272,14 +273,13 @@ public class RegistrarCliente {
 
                                 }
 
-
                                 // RESERVAR ESTACIONAMIENTO
                                 // crea los gestores
                                 GestorReservasEstacionamiento gestor_reservas_estacionamiento = new GestorReservasEstacionamiento();
                                 GestorEstacionamientos gestor_estacionamiento = new GestorEstacionamientos();
 
                                 // carga los estacionamientos guardados en archivo
-                                gestor_carpas.cargarDesdeArchivo("estacionamientos.json");
+                                gestor_estacionamiento.cargarDesdeArchivo("estacionamientos.json");
 
                                 // selecciona un estacionamiento del tipo elegido entre las carpas reservables
                                 Servicios.Estacionamiento estacionamiento = null;
@@ -292,7 +292,7 @@ public class RegistrarCliente {
                                 //TODO: Resolver tercer argumento
                                 if(estacionamiento != null){
                                     // reserva estacionamiento
-                                    gestor_reservas_carpas.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json", );
+                                    gestor_reservas_estacionamiento.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json", );
 
                                     /* cuando se reserva un estacionamiento cambia su estado a OCUPADO
                                      por eso hay que actualizar el archivo */
