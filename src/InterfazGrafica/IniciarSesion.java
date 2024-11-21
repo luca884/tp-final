@@ -77,7 +77,6 @@ public class IniciarSesion {
                     // busca empleado con nombre de usuario igual al ingresado
                     Empleado empleado = gestor_empleados.buscarPorUsuario(usuario_ingresado);
 
-
                     // si encuentra al empleado
                     if (empleado != null) {
                         // comprueba si las credenciales ingresadas son correctas
