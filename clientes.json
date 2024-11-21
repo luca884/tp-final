@@ -2,6 +2,8 @@
   {
     "telefono": 2238765432,
     "correo": "lucas.martinez@gmail.com",
+    "carpa": "ESTANDAR",
+    "estacionamiento": "ESTANDAR",
     "valor_Total": 1650000.0,
     "nombre": "Lucas",
     "apellido": "Martínez",
@@ -13,6 +15,8 @@
   {
     "telefono": 2235432109,
     "correo": "valentina.garcia@gmail.com",
+    "carpa": "VIP",
+    "estacionamiento": "VIP",
     "valor_Total": 1300000.0,
     "nombre": "Valentina",
     "apellido": "García",
@@ -24,6 +28,8 @@
   {
     "telefono": 2237654321,
     "correo": "camila.fernandez@hotmail.com",
+    "carpa": "VIP",
+    "estacionamiento": "ESTANDAR",
     "valor_Total": 1500000.0,
     "nombre": "Camila",
     "apellido": "Fernández",
@@ -35,6 +41,8 @@
   {
     "telefono": 2236543210,
     "correo": "mateo@lopez.com",
+    "carpa": "VIP",
+    "estacionamiento": "ESTANDAR",
     "valor_Total": 1250000.0,
     "nombre": "Mateo",
     "apellido": "López",
@@ -46,6 +54,8 @@
   {
     "telefono": 2231234567,
     "correo": "sofia.gonzalez@gmail.com",
+    "carpa": "ESTANDAR",
+    "estacionamiento": "VIP",
     "valor_Total": 1550000.0,
     "nombre": "Sofía",
     "apellido": "González",
@@ -57,12 +67,28 @@
   {
     "telefono": 2234321098,
     "correo": "diego.torres@hotmail.com",
+    "carpa": "VIP",
+    "estacionamiento": "ESTANDAR",
     "valor_Total": 1800000.0,
     "nombre": "Diego",
     "apellido": "Torres",
     "dni": "38123467",
     "credenciales": {
       "diego_torres": -1871188695
+    }
+  },
+  {
+    "telefono": 2237891234,
+    "correo": "laura_cabrera",
+    "carpa": "VIP",
+    "estacionamiento": "VIP",
+    "servicio": "SPA",
+    "valor_Total": 1800000.0,
+    "nombre": "Laura",
+    "apellido": "Cabrera",
+    "dni": "39124789",
+    "credenciales": {
+      "laura_cabrera": -1411696046
     }
   }
 ]
