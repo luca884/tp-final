@@ -8,7 +8,7 @@ public class GestorClientes extends Gestor<Cliente> {
     /* metodos */
     public Cliente buscarPorUsuario(String usuario){
         for(Cliente cliente: getLista()){
-            if(cliente.getCredenciales().keySet().toArray()[0].toString().equals(usuario)){
+            if(!cliente.getCredenciales().keySet().isEmpty() && cliente.getCredenciales().keySet().toArray()[0].toString().equals(usuario)){
                 return cliente;
             }
         }
