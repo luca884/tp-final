@@ -292,7 +292,7 @@ public class RegistrarCliente {
                                 //TODO: Resolver tercer argumento
                                 if(estacionamiento != null){
                                     // reserva estacionamiento
-                                    gestor_reservas_carpas.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json", );
+                                    gestor_reservas_carpas.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json");
 
                                     /* cuando se reserva un estacionamiento cambia su estado a OCUPADO
                                      por eso hay que actualizar el archivo */

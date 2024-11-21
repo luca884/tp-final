@@ -14,7 +14,7 @@
         </constraints>
         <properties>
           <font name="Arial Black" size="22" style="1"/>
-          <text value="Mantenimiento"/>
+          <text value="Bienvenido"/>
         </properties>
       </component>
       <vspacer id="b433d">

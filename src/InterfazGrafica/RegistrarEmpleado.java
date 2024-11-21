@@ -146,7 +146,7 @@ public class RegistrarEmpleado {
 
 
                                     } catch (ElementoDuplicadoException ex) {
-                                        JOptionPane.showMessageDialog(panel1, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                                        JOptionPane.showMessageDialog(panel1, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); //Detecta si se repite el dni
                                     }
                                 } else {
                                     JOptionPane.showMessageDialog(dialogo, "El usuario y la contraseña deben ser distintos.", "Error", JOptionPane.ERROR_MESSAGE);

@@ -21,11 +21,10 @@ public class MenuUsuario {
     private JTable tablaClientes;
     private JPanel panel1;
     GestorClientes gestorClientes = new GestorClientes();
-IniciarSesion iniciarSesion = new IniciarSesion();
-    public MenuUsuario (Cliente cliente){
+    IniciarSesion iniciarSesion = new IniciarSesion();
 
+    public MenuUsuario(Cliente cliente) {
         cargarDatosEnTabla(cliente);
-
 
         atrasButton.addActionListener(new ActionListener() {
             @Override
@@ -36,7 +35,6 @@ IniciarSesion iniciarSesion = new IniciarSesion();
                 frame.dispose();
             }
         });
-
 
         editarButton.addActionListener(new ActionListener() {
             @Override
@@ -119,15 +117,13 @@ IniciarSesion iniciarSesion = new IniciarSesion();
                                 : estandarEstacionamientoButton.isSelected() ? Estacionamiento.ESTANDAR
                                 : Estacionamiento.NO_INCLUYE;
 
-                        Servicio nuevoServicio;
+                        Servicio nuevoServicio = null;
                         if (spaCheckBox.isSelected() && guarderiaCheckBox.isSelected()) {
                             nuevoServicio = Servicio.GUARDERIA_Y_SPA;
                         } else if (spaCheckBox.isSelected()) {
                             nuevoServicio = Servicio.SPA;
                         } else if (guarderiaCheckBox.isSelected()) {
                             nuevoServicio = Servicio.GUARDERIA;
-                        } else {
-                            throw new IllegalArgumentException("Debe seleccionar al menos un servicio.");
                         }
 
                         // Actualizar los datos del cliente
@@ -161,87 +157,99 @@ IniciarSesion iniciarSesion = new IniciarSesion();
                 dialog.setVisible(true);
             }
         });
-
-
-
-
     }
 
-    private void cargarDatosEnTabla(Cliente cliente) {
+  /*  private void cargarDatosEnTabla(Cliente cliente) {
+        // Configurar columnas dinámicas
+        List<String> columnas = new ArrayList<>(Arrays.asList(
+                "DNI", "Nombre", "Apellido", "Teléfono", "Correo Electrónico"
+        ));
 
+        if (cliente.getCarpa() != null) columnas.add("Carpa");
+        if (cliente.getEstacionamiento() != null) columnas.add("Estacionamiento");
+        if (cliente.getServicio() != null) columnas.add("Servicio");
 
-
-        // Configurar las columnas de la tabla
-        // Inicia con las columnas básicas
-        List<String> columnas = new ArrayList<>(Arrays.asList("DNI", "Nombre", "Apellido", "Teléfono", "Correo Electrónico"));
-
-        // Verificar si agregar columnas adicionales basadas en los atributos del cliente
-            if (cliente.getCarpa() != null) {
-                if (!columnas.contains("Carpa")) {
-                    columnas.add("Carpa");
-                }
-            }
-            if (cliente.getEstacionamiento() != null) {
-                if (!columnas.contains("Estacionamiento")) {
-                    columnas.add("Estacionamiento");
-                }
-            }
-            if (cliente.getServicio() != null) {
-                if (!columnas.contains("Servicio")) {
-                    columnas.add("Servicio");
-                }
-            }
-
-
-        // Convertir la lista de columnas en un arreglo para el DefaultTableModel
         String[] columnasArray = columnas.toArray(new String[0]);
         DefaultTableModel modelo = new DefaultTableModel(columnasArray, 0);
 
-        // Asegurarse de que la tabla no tenga filas previas
-        modelo.setRowCount(0);  // Vacía las filas de la tabla
+        List<Object> row = new ArrayList<>();
+        row.add(cliente.getDni());
+        row.add(cliente.getNombre());
+        row.add(cliente.getApellido());
+        row.add(cliente.getTelefono());
+        row.add(cliente.getCorreo());
+        if (cliente.getCarpa() != null) row.add(cliente.getCarpa());
+        if (cliente.getEstacionamiento() != null) row.add(cliente.getEstacionamiento());
+        if (cliente.getServicio() != null) row.add(cliente.getServicio());
 
-        // Agregar filas con los datos de los clientes
-            List<Object> row = new ArrayList<>();
-            row.add(cliente.getDni());
-            row.add(cliente.getNombre());
-            row.add(cliente.getApellido());
-            row.add(cliente.getTelefono());
-            row.add(cliente.getCorreo());
+        modelo.addRow(row.toArray());
+        tablaClientes.setModel(modelo);
+    }*/
 
-            // Agregar datos de Carpa, Estacionamiento y Servicio si corresponden
-            if (columnas.contains("Carpa")) {
-                row.add(cliente.getCarpa());
-            }
-            if (columnas.contains("Estacionamiento")) {
-                row.add(cliente.getEstacionamiento() != null ? cliente.getEstacionamiento() : "No tiene");
-            }
-            if (columnas.contains("Servicio")) {
-                row.add(cliente.getServicio() != null ? cliente.getServicio() : "No tiene");
-            }
+    private void cargarDatosEnTabla(Cliente cliente) {
+        // Configurar columnas dinámicas
+        List<String> columnas = new ArrayList<>(Arrays.asList(
+                "DNI", "Nombre", "Apellido", "Teléfono", "Correo Electrónico"
+        ));
 
-            modelo.addRow(row.toArray());
+        // Verificar cada atributo y añadir columnas según sea necesario
+        if (cliente.getCarpa() != null) {
+            columnas.add("Carpa");
+        } else {
+            System.out.println("Carpa es null para el cliente: " + cliente.getDni());
+        }
 
-        // Asignar el modelo al JTable
+        if (cliente.getEstacionamiento() != null) {
+            columnas.add("Estacionamiento");
+        } else {
+            System.out.println("Estacionamiento es null para el cliente: " + cliente.getDni());
+        }
+
+        if (cliente.getServicio() != null) {
+            columnas.add("Servicio");
+        } else {
+            System.out.println("Servicio es null para el cliente: " + cliente.getDni());
+        }
+
+        // Crear el modelo de tabla con las columnas dinámicas
+        String[] columnasArray = columnas.toArray(new String[0]);
+        DefaultTableModel modelo = new DefaultTableModel(columnasArray, 0);
+
+        // Crear fila de datos del cliente
+        List<Object> row = new ArrayList<>();
+        row.add(cliente.getDni());
+        row.add(cliente.getNombre());
+        row.add(cliente.getApellido());
+        row.add(cliente.getTelefono());
+        row.add(cliente.getCorreo());
+        if (cliente.getCarpa() != null) {
+            row.add(cliente.getCarpa());
+        }
+        if (cliente.getEstacionamiento() != null) {
+            row.add(cliente.getEstacionamiento());
+        }
+        if (cliente.getServicio() != null) {
+            row.add(cliente.getServicio());
+        }
+
+        // Añadir fila al modelo de la tabla
+        modelo.addRow(row.toArray());
         tablaClientes.setModel(modelo);
 
+        // Debug: Imprimir el estado final del cliente y la fila
+        System.out.println("Cliente cargado: " + cliente);
+        System.out.println("Fila cargada: " + row);
     }
 
 
-
-    public void setVisible(boolean visible){
+    public void setVisible(boolean visible) {
         JFrame frame = new JFrame("Menu Usuario");
-        frame.setContentPane(panel1); //Asigna el contenido a la ventana
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cierra la ventana, pero no para el programa
-        frame.pack(); //Ajusta el tamaño del JFrame para que encaje con el contenido
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); //Muestra la ventana en pantalla completa
-        frame.requestFocusInWindow(); //Hace foco a la ventana
-        frame.setLocationRelativeTo(null); //Coloca el JFrame en el centro de la pantalla
-        frame.setVisible(visible); //Muestra la ventana si "visible" es true
+        frame.setContentPane(panel1);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.requestFocusInWindow();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(visible);
     }
-
-
-
-
-
-
 }
