@@ -12,8 +12,10 @@ public class Cliente extends Persona{
     private Estacionamiento estacionamiento;
     private Servicio servicio;
     private double valor_Total;
+    /*
     private int numCarpa;
     private int numEstacionamiento;
+    */
 
     public Cliente(String nombre, String apellido, String dni, Long telefono, String correo) {
         super(nombre, apellido, dni);
@@ -24,8 +26,10 @@ public class Cliente extends Persona{
         this.estacionamiento = getEstacionamiento();
         this.servicio = getServicio();
         this.valor_Total = 0;
+        /*
         this.numCarpa = 0;
         this.numEstacionamiento = 0;
+         */
     }
     public Cliente() {
     }
@@ -78,6 +82,7 @@ public class Cliente extends Persona{
         this.valor_Total = valor_Total;
     }
 
+    /*
     public int getNumCarpa() {
         return numCarpa;
     }
@@ -93,4 +98,5 @@ public class Cliente extends Persona{
     public void setNumEstacionamiento(int numEstacionamiento) {
         this.numEstacionamiento = numEstacionamiento;
     }
+     */
 }
