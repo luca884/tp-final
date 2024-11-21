@@ -1,9 +1,14 @@
 package InterfazGrafica;
 
 import Enumeraciones.Carpa;
+import Enumeraciones.Estado;
 import Enumeraciones.Servicio;
 import Excepciones.ElementoDuplicadoException;
+import Gestores.GestorCarpas;
 import Gestores.GestorClientes;
+//import Gestores.GestorEstacionamientos;
+import Gestores.Reservas.GestorReservasCarpas;
+import Gestores.Reservas.GestorReservasEstacionamiento;
 import Personas.Cliente;
 import Enumeraciones.Estacionamiento;
 
@@ -293,7 +298,6 @@ private Cliente cliente = new Cliente();
                                     gestor_estacionamiento.guardarEnArchivo("estacionamientos.json");
                                 }
                                 // else: el tipo de estacionamiento seleccionado no esta disponible
-
 
                                 // Mensaje de éxito
                                 JOptionPane.showMessageDialog(dialogo, "Usuario y contraseña guardados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
