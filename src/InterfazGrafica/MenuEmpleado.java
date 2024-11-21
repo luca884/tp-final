@@ -145,6 +145,4 @@ public class MenuEmpleado {
         tablaEmpleados.setModel(modeloTabla);
     }
 
-
-
 }

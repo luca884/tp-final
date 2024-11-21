@@ -1,5 +1,9 @@
 package InterfazGrafica;
 
+import Gestores.GestorEstacionamientos;
+import Gestores.Reservas.GestorReservasEstacionamiento;
+import Personas.Empleado;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,7 +13,6 @@ public class Estacionamiento {
     private JTable TablaEstacionamiento;
     private JButton atrasButton;
     private JPanel panel;
-
 
     public Estacionamiento (){
         atrasButton.addActionListener(new ActionListener() {
@@ -24,8 +27,6 @@ public class Estacionamiento {
     }
 
 
-
-
     public void setVisible(boolean visible){
         JFrame frame = new JFrame("Estacionamiento");
         frame.setContentPane(panel); //Asigna el contenido a la ventana
@@ -36,6 +37,5 @@ public class Estacionamiento {
         frame.setLocationRelativeTo(null); //Coloca el JFrame en el centro de la pantalla
         frame.setVisible(visible); //Muestra la ventana si "visible" es true
     }
-
 
 }

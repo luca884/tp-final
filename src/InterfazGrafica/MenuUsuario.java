@@ -188,27 +188,8 @@ public class MenuUsuario {
     private void cargarDatosEnTabla(Cliente cliente) {
         // Configurar columnas dinámicas
         List<String> columnas = new ArrayList<>(Arrays.asList(
-                "DNI", "Nombre", "Apellido", "Teléfono", "Correo Electrónico"
+                "DNI", "Nombre", "Apellido", "Teléfono", "Correo Electrónico", "Carpa", "Estacionamiento", "Servicio"
         ));
-
-        // Verificar cada atributo y añadir columnas según sea necesario
-        if (cliente.getCarpa() != null) {
-            columnas.add("Carpa");
-        } else {
-            System.out.println("Carpa es null para el cliente: " + cliente.getDni());
-        }
-
-        if (cliente.getEstacionamiento() != null) {
-            columnas.add("Estacionamiento");
-        } else {
-            System.out.println("Estacionamiento es null para el cliente: " + cliente.getDni());
-        }
-
-        if (cliente.getServicio() != null) {
-            columnas.add("Servicio");
-        } else {
-            System.out.println("Servicio es null para el cliente: " + cliente.getDni());
-        }
 
         // Crear el modelo de tabla con las columnas dinámicas
         String[] columnasArray = columnas.toArray(new String[0]);
@@ -221,6 +202,10 @@ public class MenuUsuario {
         row.add(cliente.getApellido());
         row.add(cliente.getTelefono());
         row.add(cliente.getCorreo());
+        row.add(cliente.getCarpa());
+        row.add(cliente.getEstacionamiento());
+        row.add(cliente.getServicio());
+
         if (cliente.getCarpa() != null) {
             row.add(cliente.getCarpa());
         }
