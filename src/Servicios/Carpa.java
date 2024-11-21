@@ -1,8 +1,9 @@
 package Servicios;
 
 import Enumeraciones.Estado;
+import Interfaces.Reservable;
 
-public class Carpa extends Servicio {
+public class Carpa extends Servicio implements Reservable {
     /* atributos */
     private Enumeraciones.Carpa tipo_de_carpa;
 
@@ -23,7 +24,7 @@ public class Carpa extends Servicio {
             case Enumeraciones.Carpa.ESTANDAR -> 750000.0;
         };
     }
-    public Boolean esReservable(){
+    public boolean esReservable(){
         return this.getEstado() == Estado.DISPONIBLE;
     }
 

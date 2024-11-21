@@ -1,6 +1,8 @@
 package Servicios;
 
-public class Estacionamiento extends Servicio {
+import Interfaces.Reservable;
+
+public class Estacionamiento extends Servicio implements Reservable {
     /* atributos */
     static private Integer capacidad = 70;
     static private Integer lugares_disponibles = capacidad;
@@ -23,7 +25,7 @@ public class Estacionamiento extends Servicio {
     }
 
     /* metodos */
-    public Boolean esReservable(){
+    public boolean esReservable(){
         return Estacionamiento.lugares_disponibles > 0;
     }
 
