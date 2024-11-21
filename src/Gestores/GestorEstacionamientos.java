@@ -11,7 +11,7 @@ public class GestorEstacionamientos extends Gestor<Estacionamiento> {
     /* métodos */
     public Estacionamiento buscarReservablePorTipo(Enumeraciones.Estacionamiento tipoEstacionamiento) {
         for(Estacionamiento elemento : getLista()){
-            if(elemento.esReservable() && elemento.getTipoEstacionamiento() == tipoEstacionamiento){
+            if(elemento.esReservable() && elemento.getTipo_de_estacionamiento() == tipoEstacionamiento){
                 return elemento;
             }
         }
