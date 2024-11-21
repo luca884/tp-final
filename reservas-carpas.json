@@ -1,0 +1,128 @@
+[
+  {
+    "id": 5,
+    "servicio": {
+      "tipo_de_carpa": "VIP",
+      "idServicio": 26,
+      "precio": 1000000.0,
+      "estado": "OCUPADO"
+    },
+    "cliente": {
+      "telefono": 2237654321,
+      "correo": "camila.fernandez@hotmail.com",
+      "valor_Total": 1500000.0,
+      "nombre": "Camila",
+      "apellido": "Fernández",
+      "dni": "43124567",
+      "credenciales": {
+        "camila_fernandez": -233058810
+      }
+    },
+    "fecha": "2024-11-21"
+  },
+  {
+    "id": 3,
+    "servicio": {
+      "tipo_de_carpa": "VIP",
+      "idServicio": 33,
+      "precio": 1000000.0,
+      "estado": "OCUPADO"
+    },
+    "cliente": {
+      "telefono": 2238765432,
+      "correo": "lucas.martinez@gmail.com",
+      "valor_Total": 1650000.0,
+      "nombre": "Lucas",
+      "apellido": "Martínez",
+      "dni": "40123456",
+      "credenciales": {
+        "lucas_martinez": 1403730359
+      }
+    },
+    "fecha": "2024-11-21"
+  },
+  {
+    "id": 7,
+    "servicio": {
+      "tipo_de_carpa": "VIP",
+      "idServicio": 27,
+      "precio": 1000000.0,
+      "estado": "OCUPADO"
+    },
+    "cliente": {
+      "telefono": 2236543210,
+      "correo": "mateo@lopez.com",
+      "valor_Total": 1250000.0,
+      "nombre": "Mateo",
+      "apellido": "López",
+      "dni": "42137654",
+      "credenciales": {
+        "mateo_lopez": 298927918
+      }
+    },
+    "fecha": "2024-11-21"
+  },
+  {
+    "id": 1,
+    "servicio": {
+      "tipo_de_carpa": "VIP",
+      "idServicio": 18,
+      "precio": 1000000.0,
+      "estado": "OCUPADO"
+    },
+    "cliente": {
+      "telefono": 2231234567,
+      "correo": "sofia.gonzalez@gmail.com",
+      "valor_Total": 1550000.0,
+      "nombre": "Sofía",
+      "apellido": "González",
+      "dni": "43876543",
+      "credenciales": {
+        "sofia_gonzalez": 1308467920
+      }
+    },
+    "fecha": "2024-11-21"
+  },
+  {
+    "id": 11,
+    "servicio": {
+      "tipo_de_carpa": "VIP",
+      "idServicio": 32,
+      "precio": 1000000.0,
+      "estado": "OCUPADO"
+    },
+    "cliente": {
+      "telefono": 2234321098,
+      "correo": "diego.torres@hotmail.com",
+      "valor_Total": 1800000.0,
+      "nombre": "Diego",
+      "apellido": "Torres",
+      "dni": "38123467",
+      "credenciales": {
+        "diego_torres": -1871188695
+      }
+    },
+    "fecha": "2024-11-21"
+  },
+  {
+    "id": 9,
+    "servicio": {
+      "tipo_de_carpa": "ESTANDAR",
+      "idServicio": 24,
+      "precio": 750000.0,
+      "estado": "OCUPADO"
+    },
+    "cliente": {
+      "telefono": 2235432109,
+      "correo": "valentina.garcia@gmail.com",
+      "valor_Total": 1300000.0,
+      "nombre": "Valentina",
+      "apellido": "García",
+      "dni": "39124356",
+      "credenciales": {
+        "valentina_garcia": -1424717208
+      }
+    },
+    "fecha": "2024-11-21"
+  }
+]

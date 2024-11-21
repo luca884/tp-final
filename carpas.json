@@ -1,0 +1,122 @@
+[
+  {
+    "tipo_de_carpa": "VIP",
+    "idServicio": 27,
+    "precio": 1000000.0,
+    "estado": "OCUPADO"
+  },
+  {
+    "tipo_de_carpa": "ESTANDAR",
+    "idServicio": 35,
+    "precio": 750000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "ESTANDAR",
+    "idServicio": 20,
+    "precio": 750000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "VIP",
+    "idServicio": 32,
+    "precio": 1000000.0,
+    "estado": "OCUPADO"
+  },
+  {
+    "tipo_de_carpa": "VIP",
+    "idServicio": 19,
+    "precio": 1000000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "VIP",
+    "idServicio": 33,
+    "precio": 1000000.0,
+    "estado": "OCUPADO"
+  },
+  {
+    "tipo_de_carpa": "ESTANDAR",
+    "idServicio": 29,
+    "precio": 750000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "VIP",
+    "idServicio": 16,
+    "precio": 1000000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "ESTANDAR",
+    "idServicio": 22,
+    "precio": 750000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "VIP",
+    "idServicio": 18,
+    "precio": 1000000.0,
+    "estado": "OCUPADO"
+  },
+  {
+    "tipo_de_carpa": "ESTANDAR",
+    "idServicio": 24,
+    "precio": 750000.0,
+    "estado": "OCUPADO"
+  },
+  {
+    "tipo_de_carpa": "ESTANDAR",
+    "idServicio": 31,
+    "precio": 750000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "ESTANDAR",
+    "idServicio": 23,
+    "precio": 750000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "ESTANDAR",
+    "idServicio": 30,
+    "precio": 750000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "VIP",
+    "idServicio": 17,
+    "precio": 1000000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "ESTANDAR",
+    "idServicio": 21,
+    "precio": 750000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "ESTANDAR",
+    "idServicio": 34,
+    "precio": 750000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "ESTANDAR",
+    "idServicio": 28,
+    "precio": 750000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "ESTANDAR",
+    "idServicio": 25,
+    "precio": 750000.0,
+    "estado": "DISPONIBLE"
+  },
+  {
+    "tipo_de_carpa": "VIP",
+    "idServicio": 26,
+    "precio": 1000000.0,
+    "estado": "OCUPADO"
+  }
+]
