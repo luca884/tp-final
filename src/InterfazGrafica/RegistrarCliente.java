@@ -241,6 +241,60 @@ private Cliente cliente = new Cliente();
                                 // agrega cliente a archivo
                                 gestor_clientes.agregarAlArchivo(cliente, "clientes.json");
 
+                                // RESERVAR CARPA
+
+                                // crea los gestores
+                                GestorReservasCarpas gestor_reservas_carpas = new GestorReservasCarpas();
+                                GestorCarpas gestor_carpas = new GestorCarpas();
+
+                                // carga las carpas guardadas en archivo
+                                gestor_carpas.cargarDesdeArchivo("carpas.json");
+
+                                // selecciona una carpa del tipo elegido entre las carpas reservables
+                                Servicios.Carpa carpa = null;
+                                if(checkBox_CarpaVIP.isSelected()){
+                                    carpa = gestor_carpas.buscarReservablePorTipo(Carpa.VIP);
+                                } else if (checkBox_CarpaStandard.isSelected()) {
+                                    carpa = gestor_carpas.buscarReservablePorTipo(Carpa.ESTANDAR);
+                                }
+
+                                if(carpa != null){
+                                    // reserva la carpa
+                                    gestor_reservas_carpas.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json");
+
+                                    /* cuando se reserva una carpa cambia su estado a OCUPADO */
+                                    /* por eso hay que actualizar el archivo */
+                                    gestor_carpas.guardarEnArchivo("carpas.json");
+                                }
+                                // else: el tipo de carpa seleccionado no esta disponible
+
+                                // RESERVAR ESTACIONAMIENTO
+                                // crea los gestores
+                                GestorReservasEstacionamiento gestor_reservas_estacionamiento = new GestorReservasEstacionamiento();
+                                GestorEstacionamientos gestor_estacionamiento = new GestorEstacionamientos();
+
+                                // carga los estacionamiento guardados en archivo
+                                gestor_carpas.cargarDesdeArchivo("estacionamientos.json");
+
+                                // selecciona un estacionamiento del tipo elegido entre las carpas reservables
+                                Servicios.Estacionamiento estacionamiento = null;
+                                if(checkBox_EstacionamientoTechado.isSelected()){
+                                    estacionamiento = gestor_estacionamiento.buscarReservablePorTipo(Estacionamiento.VIP);
+                                } else if (checkBoxEstacionamientoStandard.isSelected()) {
+                                    estacionamiento = gestor_estacionamiento.buscarReservablePorTipo(Estacionamiento.ESTANDAR);
+                                }
+
+                                if(estacionamiento != null){
+                                    // reserva estacionamiento
+                                    gestor_reservas_carpas.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json");
+
+                                    /* cuando se reserva un estacionamiento cambia su estado a OCUPADO */
+                                    /* por eso hay que actualizar el archivo */
+                                    gestor_estacionamiento.guardarEnArchivo("estacionamientos.json");
+                                }
+                                // else: el tipo de estacionamiento seleccionado no esta disponible
+
+
                                 // Mensaje de éxito
                                 JOptionPane.showMessageDialog(dialogo, "Usuario y contraseña guardados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                                 dialogo.dispose(); // Cierra el diálogo
@@ -265,8 +319,8 @@ private Cliente cliente = new Cliente();
                 limpiarCampos();
                 JOptionPane.showMessageDialog(panel, "Cliente registrado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 
-            /*   RegistrarUsuarioContra registrarUsuarioContra = new RegistrarUsuarioContra();
-               registrarUsuarioContra.setVisible(true);*/
+                IniciarSesion iniciarSesion = new IniciarSesion();
+                iniciarSesion.setVisible(true);
                 JFrame frame = (JFrame) SwingUtilities.getRoot(registrarButton);
                 frame.dispose();
 
@@ -274,15 +328,8 @@ private Cliente cliente = new Cliente();
                 JOptionPane.showMessageDialog(panel, "Error al registrar sus datos. Campos vacíos.", "Error", JOptionPane.ERROR_MESSAGE);
 
             }
-
-
-
             }
         });
-
-
-
-
     }
 
 
