@@ -4,6 +4,7 @@ import Enumeraciones.Estado;
 import Excepciones.ElementoDuplicadoException;
 import Gestores.Gestor;
 import Reservas.Reserva;
+import Servicios.Carpa;
 import Servicios.Estacionamiento;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
@@ -28,5 +29,9 @@ public class GestorReservasEstacionamiento extends Gestor<Reserva<Estacionamient
         Estacionamiento.cambiarLugaresDispoibles(-getLista().size());
     }
 
+    public void agregarAlArchivo(Reserva<Estacionamiento> estacionamiento, String nombre_archivo) {
+        Type type = TypeToken.getParameterized(HashSet.class, TypeToken.getParameterized(Reserva.class, Estacionamiento.class).getType()).getType();
+        super.agregarAlArchivo(estacionamiento, nombre_archivo, type);
+    }
 
 }
