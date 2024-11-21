@@ -10,7 +10,6 @@ public class MenuGerente {
     private JButton empleadosButton;
     private JButton spaButton;
     private JButton estacionamientoButton;
-    private JButton utileriaButton;
     private JButton clientesButton;
     private JButton guarderiaButton;
     private JButton salirButton;
@@ -59,16 +58,7 @@ public class MenuGerente {
             }
         });
 
-        utileriaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Utileria utileria = new Utileria();
-                utileria.setVisible(true);
-                JFrame frame = (JFrame) SwingUtilities.getRoot(utileriaButton);
-                frame.dispose();
-                System.out.println("Botón Utilería presionado");
-            }
-        });
+
 
     //Alquileres
         carpasButton.addActionListener(new ActionListener() {

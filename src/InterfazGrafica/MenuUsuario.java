@@ -21,7 +21,6 @@ public class MenuUsuario {
     private JTable tablaClientes;
     private JPanel panel1;
     GestorClientes gestorClientes = new GestorClientes();
-    IniciarSesion iniciarSesion = new IniciarSesion();
 
     public MenuUsuario(Cliente cliente) {
         cargarDatosEnTabla(cliente);

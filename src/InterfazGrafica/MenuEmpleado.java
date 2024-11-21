@@ -15,132 +15,107 @@ import java.util.HashSet;
 
 public class MenuEmpleado {
     private JPanel panel1;
-    private JPanel panel;
     private JButton atrasButton;
     private JButton editarButton;
     private JTable tablaEmpleados;
-    private JLabel subTitulo;
     private DefaultTableModel modeloTabla;
     private GestorEmpleados gestorEmpleados = new GestorEmpleados();
 
 
     public MenuEmpleado(Empleado empleado){
+        // Cargar datos en la tabla con el empleado recibido
+        cargarDatosEnTabla(empleado);
 
-        cargarDatosEnTabla();
-
+        // Acciones del botón "Atras"
         atrasButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                IniciarSesion iniciarSesion = new IniciarSesion();
+                iniciarSesion.setVisible(true);
                 JFrame frame = (JFrame) SwingUtilities.getRoot(atrasButton);
                 frame.dispose();
             }
         });
 
+        // Acción del botón "Editar"
         editarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int filaSeleccionada = tablaEmpleados.getSelectedRow();
-                if (filaSeleccionada != -1) {
-                    // Obtener los datos de la fila seleccionada
-                    String dni = (String) modeloTabla.getValueAt(filaSeleccionada, 0);
-                    String nombre = (String) modeloTabla.getValueAt(filaSeleccionada, 1);
-                    String apellido = (String) modeloTabla.getValueAt(filaSeleccionada, 2);
-                    Puesto puesto = (Puesto)  modeloTabla.getValueAt(filaSeleccionada, 3); // Convertir el String Enum
-                    double salario = (double) modeloTabla.getValueAt(filaSeleccionada, 4);
-                    String horario = (String) modeloTabla.getValueAt(filaSeleccionada, 5);  // Obtener horario
+                // Usar directamente el empleado recibido en lugar de obtenerlo de la tabla
+                String dni = empleado.getDni();
+                String nombre = empleado.getNombre();
+                String apellido = empleado.getApellido();
+                Puesto puesto = empleado.getPuesto();
+                double salario = empleado.getSalario();
+                String horario = empleado.getHorario();
 
-                    // Crear un JDialog para editar el empleado
-                    JDialog dialog = new JDialog((JFrame) null, "Editar Empleado", true);
-                    dialog.setLayout(new BorderLayout());
+                // Crear un JDialog para editar el empleado
+                JDialog dialog = new JDialog((JFrame) null, "Editar Empleado", true);
+                dialog.setLayout(new BorderLayout());
 
-                    JPanel editPanel = new JPanel(new GridLayout(8, 2));  // Modificar a 8 filas para los puestos
-                    JTextField editNombreField = new JTextField(nombre);
-                    JTextField editApellidoField = new JTextField(apellido);
-                    //Etiquetas para campos no editables
-                    JLabel salarioLabel = new JLabel(String.valueOf(salario));
-                    JLabel puestoLabel = new JLabel(puesto.name());
-                    JLabel horarioLabel = new JLabel(horario);
+                JPanel editPanel = new JPanel(new GridLayout(8, 2));  // Modificar a 8 filas para los puestos
+                JTextField editNombreField = new JTextField(nombre);
+                JTextField editApellidoField = new JTextField(apellido);
+                //Etiquetas para campos no editables
+                JLabel salarioLabel = new JLabel(String.valueOf(salario));
+                JLabel puestoLabel = new JLabel(puesto.name());
+                JLabel horarioLabel = new JLabel(horario);
 
+                // Añadir los componentes al panel
+                editPanel.add(new JLabel("Nombre:"));
+                editPanel.add(editNombreField);
+                editPanel.add(new JLabel("Apellido:"));
+                editPanel.add(editApellidoField);
+                editPanel.add(new JLabel("Salario:"));
+                editPanel.add(salarioLabel);
+                editPanel.add(new JLabel("Horario:"));
+                editPanel.add(horarioLabel);
+                editPanel.add(new JLabel("Puesto:"));
+                editPanel.add(puestoLabel);
 
+                JButton confirmButton = new JButton("Confirmar");
+                confirmButton.addActionListener(e1 -> {
+                    try {
+                        // Obtener los datos editados
+                        String nuevoNombre = editNombreField.getText();
+                        String nuevoApellido = editApellidoField.getText();
 
-                    // Añadir los componentes al panel
-                    editPanel.add(new JLabel("Nombre:"));
-                    editPanel.add(editNombreField);
-                    editPanel.add(new JLabel("Apellido:"));
-                    editPanel.add(editApellidoField);
-                    editPanel.add(new JLabel("Salario:"));
-                    editPanel.add(salarioLabel);
-                    editPanel.add(new JLabel("Horario:"));
-                    editPanel.add(horarioLabel);
-                    editPanel.add(new JLabel("Puesto:"));
-                    editPanel.add(puestoLabel);
+                        // Crear el nuevo objeto Empleado con los datos editados
+                        Empleado empleadoEditado = new Empleado(
+                                nuevoNombre,
+                                nuevoApellido,
+                                dni, // Mantener el DNI original
+                                horario,
+                                puesto,
+                                salario
+                        );
 
+                        // Actualizar el empleado en la lista
+                        gestorEmpleados.eliminar(empleado);
+                        gestorEmpleados.agregar(empleadoEditado);
 
-                    JButton confirmButton = new JButton("Confirmar");
-                    confirmButton.addActionListener(e1 -> {
-                        try {
-                            // Obtener los datos editados
-                            String nuevoNombre = editNombreField.getText();
-                            String nuevoApellido = editApellidoField.getText();
+                        // Guardar los cambios en el archivo JSON
+                        gestorEmpleados.guardarEnArchivo("empleados.json");
 
-                            // Obtener el DNI de la fila seleccionada
-                            String dniSeleccionado = (String) modeloTabla.getValueAt(filaSeleccionada, 0);  // Asumiendo que la columna 0 contiene el DNI
+                        // Actualizar la tabla
+                        modeloTabla.setValueAt(nuevoNombre, 0, 1);
+                        modeloTabla.setValueAt(nuevoApellido, 0, 2);
 
-                            // Buscar el empleado por DNI en la lista
-                            Empleado empleadoSeleccionado = null;
-                            for (Empleado empleado : gestorEmpleados.getLista()) {
-                                if (empleado.getDni().equals(dniSeleccionado)) {
-                                    empleadoSeleccionado = empleado;
-                                    break;
-                                }
-                            }
+                        dialog.dispose(); // Cerrar el diálogo
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "Error al editar el salario", "Error", JOptionPane.ERROR_MESSAGE);
+                    } catch (ElementoDuplicadoException | ElementoNoEncontradoException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                });
 
-                            if (empleadoSeleccionado != null) {
-                                // Crear el nuevo objeto Empleado
-                                Empleado empleadoEditado = new Empleado(
-                                        editNombreField.getText(),
-                                        editApellidoField.getText(),
-                                        dniSeleccionado, // Mantener el DNI original
-                                        horario,
-                                        puesto,
-                                        salario
-                                );
-
-                                // Eliminar el empleado anterior y agregar el editado
-                                gestorEmpleados.eliminar(empleadoSeleccionado);
-                                gestorEmpleados.agregar(empleadoEditado);
-
-                                // Guardar los cambios en el archivo JSON
-                                gestorEmpleados.guardarEnArchivo("empleados.json");
-
-                                // Actualizar la tabla
-                                modeloTabla.setValueAt(nuevoNombre, filaSeleccionada, 1);
-                                modeloTabla.setValueAt(nuevoApellido, filaSeleccionada, 2);
-
-                                dialog.dispose(); // Cerrar el diálogo
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Empleado no encontrado", "Error", JOptionPane.ERROR_MESSAGE);
-                            }
-                        } catch (NumberFormatException ex) {
-                            JOptionPane.showMessageDialog(null, "Error al editar el salario", "Error", JOptionPane.ERROR_MESSAGE);
-                        } catch (ElementoDuplicadoException | ElementoNoEncontradoException ex) {
-                            JOptionPane.showMessageDialog(null, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                        }
-                    });
-
-                    dialog.add(editPanel, BorderLayout.CENTER);
-                    dialog.add(confirmButton, BorderLayout.SOUTH);
-                    dialog.setSize(new Dimension(350, 350));  // Ajustado para los nuevos campos
-                    dialog.setLocationRelativeTo(null);
-                    dialog.setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Seleccione una fila para editar", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+                dialog.add(editPanel, BorderLayout.CENTER);
+                dialog.add(confirmButton, BorderLayout.SOUTH);
+                dialog.setSize(new Dimension(350, 350));  // Ajustado para los nuevos campos
+                dialog.setLocationRelativeTo(null);
+                dialog.setVisible(true);
             }
         });
-
-
     }
 
     public void setVisible(boolean visible){
@@ -154,16 +129,13 @@ public class MenuEmpleado {
         frame.setVisible(visible); //Muestra la ventana si "visible" es true
     }
 
-    void cargarDatosEnTabla() {
+    void cargarDatosEnTabla(Empleado empleado) {
         // Configurar las columnas de la tabla
         String[] columnas = {"DNI", "Nombre", "Apellido", "Puesto", "Salario", "Horario"};
         modeloTabla = new DefaultTableModel(columnas, 0);
 
-        // Obtener el HashSet de empleados desde el gestor
-        HashSet<Empleado> conjuntoEmpleados = gestorEmpleados.getLista();
-
         // Agregar filas con los datos de los empleados
-        for (Empleado empleado : conjuntoEmpleados) {
+
             modeloTabla.addRow(new Object[]{
                     empleado.getDni(),
                     empleado.getNombre(),
@@ -172,7 +144,7 @@ public class MenuEmpleado {
                     empleado.getSalario(),
                     empleado.getHorario(),
             });
-        }
+
 
         // Asignar el modelo al JTable
         tablaEmpleados.setModel(modeloTabla);
