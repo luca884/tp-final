@@ -16,28 +16,28 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MenuUsuario {
-        private JButton atrasButton;
-        private JButton editarButton;
-        private JTable tablaClientes;
-        private JPanel panel1;
-        private JTextField textPrecioTotal; // Añadimos un JTextField para mostrar el precio total
-        GestorClientes gestorClientes = new GestorClientes();
+    private JButton atrasButton;
+    private JButton editarButton;
+    private JTable tablaClientes;
+    private JPanel panel1;
+    private JTextField textPrecioTotal; // Añadimos un JTextField para mostrar el precio total
+    GestorClientes gestorClientes = new GestorClientes();
     double finalPrecioTotal = 0;
 
 
     public MenuUsuario(Cliente cliente) {
-            cargarDatosEnTabla(cliente);
+        cargarDatosEnTabla(cliente);
 
-            // Acción del botón Atras
-            atrasButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    IniciarSesion iniciarSesion = new IniciarSesion();
-                    iniciarSesion.setVisible(true);
-                    JFrame frame = (JFrame) SwingUtilities.getRoot(atrasButton);
-                    frame.dispose();
-                }
-            });
+        // Acción del botón Atras
+        atrasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                IniciarSesion iniciarSesion = new IniciarSesion();
+                iniciarSesion.setVisible(true);
+                JFrame frame = (JFrame) SwingUtilities.getRoot(atrasButton);
+                frame.dispose();
+            }
+        });
 
         editarButton.addActionListener(new ActionListener() {
             @Override

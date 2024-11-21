@@ -18,9 +18,15 @@
     "estado": "dfew"
   },
   {
-    "dni": "5",
-    "descripcion": "se rompieron 5 ceramicos de la pileta num 10",
-    "costo": 100000.0,
-    "estado": "preocupante "
+    "dni": "543",
+    "descripcion": "gfdgdf",
+    "costo": 5435.0,
+    "estado": "trete"
+  },
+  {
+    "dni": "1111111111111",
+    "descripcion": "bbbbbbbbbbbbbbbbb",
+    "costo": 4.4444444444E10,
+    "estado": "gggggggggg"
   }
 ]
