@@ -4,6 +4,8 @@ import Enumeraciones.Carpa;
 import Enumeraciones.Estacionamiento;
 import Enumeraciones.NivelPermisos;
 import Enumeraciones.Servicio;
+import Gestores.Reservas.GestorReservasCarpas;
+import Gestores.Reservas.GestorReservasEstacionamiento;
 
 public class Cliente extends Persona{
     private Long telefono;
@@ -38,6 +40,23 @@ public class Cliente extends Persona{
         return telefono;
     }
 
+    /* metodos */
+
+    public Integer conseguirNumeroCarpa(){
+        GestorReservasCarpas gestor_reservas_carpas = new GestorReservasCarpas();
+        gestor_reservas_carpas.cargarDesdeArchivo("reservas-carpas.json");
+
+        return gestor_reservas_carpas.buscarPorCliente(this).getId();
+    }
+
+    public Integer conseguirNumeroEstacionamiento(){
+        GestorReservasEstacionamiento gestor_reservas_estacionamiento = new GestorReservasEstacionamiento();
+        gestor_reservas_estacionamiento.cargarDesdeArchivo("reservas-estacionamiento.json");
+
+        return gestor_reservas_estacionamiento.buscarPorCliente(this).getId();
+    }
+
+    /* getters y setters */
     public void setTelefono(Long telefono) {
         this.telefono = telefono;
     }
