@@ -80,21 +80,17 @@ public class MenuEmpleado {
                         String nuevoNombre = editNombreField.getText();
                         String nuevoApellido = editApellidoField.getText();
 
-                        // Crear el nuevo objeto Empleado con los datos editados
-                        Empleado empleadoEditado = new Empleado(
-                                nuevoNombre,
-                                nuevoApellido,
-                                dni, // Mantener el DNI original
-                                horario,
-                                puesto,
-                                salario
-                        );
+                        // Acutalizo al empleado
+                        empleado.setNombre(nuevoNombre);
+                        empleado.setApellido(nuevoApellido);
 
                         // Actualizar el empleado en la lista
-                        gestorEmpleados.agregar(empleadoEditado);
+                        gestorEmpleados.cargarDesdeArchivo("empleados.json");
+                        gestorEmpleados.eliminar(empleado);
+                        gestorEmpleados.agregar(empleado);
 
                         gestorEmpleados.eliminar(empleado);
-                        cargarDatosEnTabla(empleadoEditado);
+
 
                         // Guardar los cambios en el archivo JSON
                         gestorEmpleados.guardarEnArchivo("empleados.json");
@@ -152,7 +148,5 @@ public class MenuEmpleado {
         // Asignar el modelo al JTable
         tablaEmpleados.setModel(modeloTabla);
     }
-
-
 
 }

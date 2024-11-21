@@ -70,7 +70,7 @@
         </constraints>
         <properties>
           <font name="Arial Black" size="22" style="1"/>
-          <text value="Balneario"/>
+          <text value="Estacionamiento"/>
         </properties>
       </component>
     </children>

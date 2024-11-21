@@ -6,10 +6,8 @@ import Enumeraciones.Puesto;
 public class Empleado extends Persona {
     /* atributos */
     private Double salario;
-
     private String horario;
     private Puesto puesto;
-
 
     /* constructor */
     public Empleado(String nombre, String apellido, String dni, String horario, Puesto puesto, double salario) {
@@ -26,13 +24,6 @@ public class Empleado extends Persona {
 
     /* metodos */
 
-   /* public Double calcularSalario(){
-        return valor_hora * cantidad_horas;
-    }
-
-    */
-
-    /* toString */
     @Override
     public String toString() {
         return super.toString() + "\nSalario: %s\nPuesto: %s".formatted(salario, puesto);
@@ -46,7 +37,6 @@ public class Empleado extends Persona {
     public void setSalario(Double salario) {
         this.salario = salario;
     }
-
 
     public Puesto getPuesto() {
         return puesto;

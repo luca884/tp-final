@@ -69,9 +69,8 @@ public class IniciarSesion {
                         System.out.println("ENCONTRO CLIENTE");
                     }
                 }else {
-                    System.out.println("NO ENCONTRO CLIENTE");
+                    System.out.println("NO ENCONTRÓ CLIENTE");
                 }
-
 
                 // si no encontro cliente buscar empleado
                 if (cliente == null) {
@@ -107,7 +106,6 @@ public class IniciarSesion {
 
     }
 
-
     public void setVisible(boolean visible) {
         JFrame frame = new JFrame("Iniciar Sesion");
         frame.setContentPane(panel1); //Asigna el contenido a la ventana
@@ -124,7 +122,5 @@ public class IniciarSesion {
         IniciarSesion iniciarSesion = new IniciarSesion();
         iniciarSesion.setVisible(true);
     }
-
-
 
 }
