@@ -40,7 +40,7 @@ public class GestorReservasCarpas extends Gestor<Reserva<Carpa>> {
     // TODO: averiguar qué carajo pasa con el tercer argumento
     /*
     public void agregarAlArchivo(Reserva<Carpa> carpa, String nombre_archivo) {
-        //super.agregarAlArchivo(carpa, nombre_archivo, Reserva<Carpa>.class);
+        super.agregarAlArchivo(carpa, nombre_archivo, );
     }
     */
 

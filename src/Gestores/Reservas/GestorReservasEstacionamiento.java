@@ -27,4 +27,6 @@ public class GestorReservasEstacionamiento extends Gestor<Reserva<Estacionamient
         super.cargarDesdeArchivo(nombre_archivo, type);
         Estacionamiento.cambiarLugaresDispoibles(-getLista().size());
     }
+
+
 }

@@ -72,7 +72,6 @@ public class IniciarSesion {
                     System.out.println("NO ENCONTRO CLIENTE");
                 }
 
-
                 // si no encontro cliente buscar empleado
                 if (cliente == null) {
                     // busca empleado con nombre de usuario igual al ingresado
