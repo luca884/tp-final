@@ -3,6 +3,7 @@ package Gestores.Reservas;
 import Enumeraciones.Estado;
 import Excepciones.ElementoDuplicadoException;
 import Gestores.Gestor;
+import Personas.Cliente;
 import Reservas.Reserva;
 import Servicios.Carpa;
 import Servicios.Estacionamiento;
@@ -11,6 +12,15 @@ import java.lang.reflect.Type;
 import java.util.HashSet;
 
 public class GestorReservasEstacionamiento extends Gestor<Reserva<Estacionamiento>> {
+    /* metodos */
+    public Reserva<Estacionamiento> buscarPorCliente(Cliente cliente){
+        for(Reserva<Estacionamiento> reserva : getLista()){
+            if(reserva.getCliente().equals(cliente)) {
+                return reserva;
+            }
+        }
+        return null;
+    }
 
     @Override
     public void agregar(Reserva<Estacionamiento> reserva) throws ElementoDuplicadoException {
