@@ -114,7 +114,6 @@ public abstract class Gestor<T> {
         }
     }
 
-
     /* getters y setters */
     public HashSet<T> getLista() {
         return lista;

@@ -1,9 +1,10 @@
 package Servicios;
 
-public class Estacionamiento  extends Servicio {
+public class Estacionamiento extends Servicio {
     /* atributos */
     static private Integer capacidad = 70;
     static private Integer lugares_disponibles = capacidad;
+    private Enumeraciones.Estacionamiento tipoEstacionamiento;
 
     /* constructores */
     public Estacionamiento() {
@@ -11,6 +12,14 @@ public class Estacionamiento  extends Servicio {
     }
     public Estacionamiento(double precio) {
         super(precio);
+    }
+
+    public Enumeraciones.Estacionamiento getTipoEstacionamiento() {
+        return tipoEstacionamiento;
+    }
+
+    public void setTipoEstacionamiento(Enumeraciones.Estacionamiento tipoEstacionamiento) {
+        this.tipoEstacionamiento = tipoEstacionamiento;
     }
 
     /* metodos */

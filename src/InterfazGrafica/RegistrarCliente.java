@@ -6,12 +6,12 @@ import Enumeraciones.Servicio;
 import Excepciones.ElementoDuplicadoException;
 import Gestores.GestorCarpas;
 import Gestores.GestorClientes;
-//import Gestores.GestorEstacionamientos;
+import Gestores.GestorEstacionamientos;
 import Gestores.Reservas.GestorReservasCarpas;
 import Gestores.Reservas.GestorReservasEstacionamiento;
 import Personas.Cliente;
 import Enumeraciones.Estacionamiento;
-
+import Reservas.Reserva;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -37,8 +37,8 @@ public class RegistrarCliente {
     private JCheckBox checkBox_Guarderia;
     private JButton registrarButton;
     private JPanel panel;
-private double precioTotal;
-private Cliente cliente = new Cliente();
+    private double precioTotal;
+    private Cliente cliente = new Cliente();
 
     public RegistrarCliente(){
         atrasButton.addActionListener(new ActionListener() {
@@ -50,9 +50,6 @@ private Cliente cliente = new Cliente();
                 frame.dispose();
             }
         });
-
-
-
 
         // Crear ButtonGroups para las opciones mutuamente excluyentes
         ButtonGroup carpasGroup = new ButtonGroup();
@@ -270,15 +267,18 @@ private Cliente cliente = new Cliente();
                                     /* cuando se reserva una carpa cambia su estado a OCUPADO */
                                     /* por eso hay que actualizar el archivo */
                                     gestor_carpas.guardarEnArchivo("carpas.json");
+                                }else{
+                                    // else: el tipo de carpa seleccionado no está disponible
+
                                 }
-                                // else: el tipo de carpa seleccionado no esta disponible
+
 
                                 // RESERVAR ESTACIONAMIENTO
                                 // crea los gestores
                                 GestorReservasEstacionamiento gestor_reservas_estacionamiento = new GestorReservasEstacionamiento();
                                 GestorEstacionamientos gestor_estacionamiento = new GestorEstacionamientos();
 
-                                // carga los estacionamiento guardados en archivo
+                                // carga los estacionamientos guardados en archivo
                                 gestor_carpas.cargarDesdeArchivo("estacionamientos.json");
 
                                 // selecciona un estacionamiento del tipo elegido entre las carpas reservables
@@ -289,15 +289,16 @@ private Cliente cliente = new Cliente();
                                     estacionamiento = gestor_estacionamiento.buscarReservablePorTipo(Estacionamiento.ESTANDAR);
                                 }
 
+                                //TODO: Resolver tercer argumento
                                 if(estacionamiento != null){
                                     // reserva estacionamiento
-                                    gestor_reservas_carpas.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json");
+                                    gestor_reservas_carpas.agregarAlArchivo(carpa.reservar(cliente), "reservas-carpas.json", );
 
-                                    /* cuando se reserva un estacionamiento cambia su estado a OCUPADO */
-                                    /* por eso hay que actualizar el archivo */
+                                    /* cuando se reserva un estacionamiento cambia su estado a OCUPADO
+                                     por eso hay que actualizar el archivo */
                                     gestor_estacionamiento.guardarEnArchivo("estacionamientos.json");
                                 }
-                                // else: el tipo de estacionamiento seleccionado no esta disponible
+                                // else: el tipo de estacionamiento seleccionado no está disponible
 
                                 // Mensaje de éxito
                                 JOptionPane.showMessageDialog(dialogo, "Usuario y contraseña guardados correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
